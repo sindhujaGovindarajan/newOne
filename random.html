@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Random Triadic Colors</title>
+<style>
+*{position:relative;}
+body,html{width:100%;height:100%;margin:0;padding:0;overflow:hidden;}
+div
+{
+	width:100%;
+	color:#fff;
+	cursor:pointer;
+	-ms-transition:all 0.2s ease;
+	-moz-transition:all 0.2s ease;
+	-o-transition:all 0.2s ease;
+	-webkit-transition:all 0.2s ease;
+	transition:all 0.2s ease;
+	line-height:100px;
+	font-size:30px;
+	text-transform:uppercase;
+	text-indent:10px;
+	font-family:verdana;
+	overflow:hidden;
+	opacity:0;
+}
+#demo
+{
+	height:40%;
+	z-index:3;
+}
+#demo1
+{
+	height:30%;
+	z-index:2;
+}
+#demo2
+{
+	height:20%;
+	z-index:1;
+}
+#demo3
+{
+	height:10%;
+	z-index:0;
+}
+@keyframes anim
+{
+	0%
+	{
+		opacity:0;
+		border-radius:50%;
+		transform:scale(0);
+	}
+	100%
+	{
+		opacity:1;
+		border-radius:0;
+		transform:scale(1);
+	}
+}
+@-webkit-keyframes anim
+{
+	0%
+	{
+		opacity:0;
+		border-radius:50%;
+		-webkit-transform:scale(0);
+	}
+	100%
+	{
+		opacity:1;
+		border-radius:0%;
+		-webkit-transform:scale(1);
+	}
+}
+</style>
+</head>
+<body onload='myFunction()'>
+<div id="demo"></div>
+<div id="demo1"></div>
+<div id="demo2"></div>
+<div id="demo3"></div>
+</body>
+<script>
+function rgb2hex(rgb)
+{
+	rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+	return (rgb && rgb.length === 4) ? "#" +
+	("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+	("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+	("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+}
+function myFunction()
+{
+	$("demo").style.animation = 'anim 0.3s ease 0s forwards';
+	$("demo1").style.animation = 'anim 0.3s ease 0.1s forwards';
+	$("demo2").style.animation = 'anim 0.3s ease 0.4s forwards';
+	$("demo3").style.animation = 'anim 0.3s ease 0.5s forwards';
+	var r = Math.floor(Math.random() * 256);
+	var g = Math.floor(Math.random() * 256);
+	var b = Math.floor(Math.random() * 256);
+/*
+    $("demo").style.background = 'rgb('+r+','+g+','+b+')';
+    $("demo1").style.background = 'rgb('+(r+6)+','+r+','+b+')';
+    $("demo2").style.background = 'rgb('+r+','+(b-6)+','+b+')';
+    $("demo3").style.background = 'rgb('+(g+6)+','+(b-6)+','+b+')';*/
+    $("demo").style.background = 'rgb('+r+','+(g+80)+','+b+')';
+    $("demo1").style.background = 'rgb('+r+','+(g+35)+','+b+')';
+    $("demo2").style.background = 'rgb('+r+','+g+','+b+')';
+    $("demo3").style.background = 'rgb('+r+','+(g-60)+','+b+')';
+	var div = document.body.querySelectorAll('div');
+	for(var i=0; i<div.length;i++)
+	{
+		div[i].onmouseover = (function(elem)
+		{
+			return function()
+			{
+				elem.innerHTML = rgb2hex(elem.style.background);
+			};
+		})(div[i]);
+		div[i].onmouseout = (function(elem)
+		{
+			return function()
+			{
+				elem.innerHTML = '';
+			};
+		})(div[i]);
+	}
+}
+function $(id){return document.getElementById(id);}
+</script>
+</html>
+  
