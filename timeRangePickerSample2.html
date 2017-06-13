@@ -1,0 +1,324 @@
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+	<meta charset="UTF-8">
+	<style>
+	body
+	{
+		height:100%;
+		overflow:hidden;
+		width:100%;
+		font-family:helvetica;
+	}
+	.timepicker
+	{
+		-webkitUser-select:none;
+		-mozUser-select:none;
+		-msUser-select:none;
+		user-select:none;
+		z-index:40;
+		box-shadow:0 0 0 1px rgba(14,41,57,.12),0 2px 5px rgba(14,41,57,.44),inset 0 -1px 2px rgba(14,41,57,.15);
+		background:#fefefe;
+		margin:0 auto;
+		border-radius:.1px;
+		width:270px;
+		height:130px;
+		font-size:14px;
+		position:absolute;
+	}
+	.timepickerTitle
+	{
+		background-image:-webkit-linear-gradient(top,#fff 0,#f2f2f2 100%);
+		position:relative;
+		background:#f2f2f2;
+		margin:0 auto;
+		border-bottom:1px solid #e5e5e5;
+		padding:12px 11px 10px 15px;
+		color:#4C4C4C;
+		font-size:inherit
+	}
+	.timepickerClose
+	{
+		-webkit-transform:translateY(-25%);
+		-moz-transform:translateY(-25%);
+		-ms-transform:translateY(-25%);
+		-o-transform:translateY(-25%);
+		transform:translateY(-25%);
+		position:absolute;
+		top:25%;
+		right:10px;
+		color:#34495e;
+		cursor:pointer;
+		-webkitUser-select:none;
+		-mozUser-select:none;
+		-msUser-select:none;
+		user-select:none;
+	}
+	.timepickerClose:before
+	{
+		content:'\00d7'
+	}
+	.timepickerControls
+	{
+		padding:10px 0;
+		line-height:normal;
+		margin:0
+	}
+	.timepickerControlsControl,.timepickerControlsControlSeparator
+	{
+		vertical-align:middle;
+		display:inline-block;
+		font-size:inherit;
+		margin:0 auto;
+		width:50px;
+		letter-spacing:1.3px
+	}
+	.timepickerControlsControlDown,.timepickerControlsControlUp
+	{
+		position:relative;
+		display:block;
+		margin:6px auto;
+		cursor:pointer;
+		height:10px;
+		width:10px;
+		transform:rotate(45deg);
+	}
+	.timepickerControlsControlUp:before
+	{
+		border-top:solid 1px #34495e;
+		border-left:solid 1px #34495e;
+	}
+	.timepickerControlsControlDown:after
+	{
+		border-bottom:solid 1px #34495e;
+		border-right:solid 1px #34495e;
+	}
+	.timepickerControlsControlSeparator
+	{
+		width:5px;
+		font-weight:bold;
+	}
+	.text-center,.timepickerControls,.timepickerControlsControl,.timepickerControlsControlSeparator,.timepickerControlsControlDown,.timepickerControlsControlUp,.timepickerTitle
+	{
+		text-align:center
+	}
+	.timepickerControlsControlDown:hover:after,.timepickerControlsControlUp:hover:before
+	{
+		border-color:#3498db;
+	}
+	.timepickerControlsControlDown:after,.timepickerControlsControlUp:before
+	{
+		content:'';
+		display:inline-block;
+		height:100%;
+		width:100%;
+	}
+	.timePickerDullscreen
+	{	
+		position:absolute;
+		top:0;
+		left:0;
+		z-index:0;
+		height:100%;
+		width:100%;
+		background:transparent;
+	}
+	</style>
+<head>
+<body>
+<input type='text' id='range1_from' onclick='createOtlTimePicker(this)' />
+<input type='text' id='range1_to' onclick='createOtlTimePicker(this)' />
+</body>
+<script>
+function $(id){return document.getElementById(id);}
+function timeVary(timeOf,action)
+{
+	if(timeOf=='.timepickerControlsControlMeridiem')
+	{
+		var meridiem = $("timePicker").querySelector(timeOf).innerHTML;
+		if(meridiem=='AM')
+			$("timePicker").querySelector(timeOf).innerHTML = 'PM';
+		else
+			$("timePicker").querySelector(timeOf).innerHTML = 'AM';
+	}
+	else
+	{
+		var prev_time = Number($("timePicker").querySelector(timeOf).innerHTML);
+		if(timeOf=='.timepickerControlsControlHours' && prev_time==1 && action=='dec')
+			$("timePicker").querySelector(timeOf).innerHTML = '12';
+		else if(timeOf=='.timepickerControlsControlHours' && prev_time==12 && action=='inc')
+			$("timePicker").querySelector(timeOf).innerHTML = '01';
+		else if(timeOf=='.timepickerControlsControlMinutes' && prev_time==59 && action=='inc')
+			$("timePicker").querySelector(timeOf).innerHTML = '00';
+		else if(timeOf=='.timepickerControlsControlMinutes' && prev_time==0 && action=='dec')
+			$("timePicker").querySelector(timeOf).innerHTML = '59';
+		else
+		{
+			if(action=='inc')
+				$("timePicker").querySelector(timeOf).innerHTML = prev_time+1;
+			else
+				$("timePicker").querySelector(timeOf).innerHTML = prev_time-1;
+		}
+	}
+	setTime();
+}
+function createOtlTimePicker(elem)
+{
+	elem.blur();
+	if($('timePicker'))
+	{
+		var elemPos = otlVLGetPos(elem);
+		$("timePicker").style.left = elemPos[0]+'px';
+		$("timePicker").style.top = elemPos[1]+elemPos[3]+'px';
+		return;
+	}
+	
+	var timePickerDullscreen = document.createElement('div');
+	timePickerDullscreen.className = 'timePickerDullscreen';
+	timePickerDullscreen.id = 'timePickerDullscreen';
+	timePickerDullscreen.onclick = function(){closeTimePicker();};
+	document.body.appendChild(timePickerDullscreen);
+	
+	var timePicker = document.createElement('div');
+	timePicker.className = 'timepicker';
+	timePicker.id = 'timePicker';
+	timePicker.setAttribute('data-timePicker-parentNode',elem.id);
+	document.body.appendChild(timePicker);
+	
+	var elemPos = otlVLGetPos(elem);
+	$("timePicker").style.left = elemPos[0]+'px';
+	$("timePicker").style.top = elemPos[1]+elemPos[3]+'px';
+	
+	var timepickerTitle = document.createElement('p');
+	timepickerTitle.className = 'timepickerTitle';
+	timepickerTitle.innerHTML = 'Timepicker';
+	timePicker.appendChild(timepickerTitle);
+	
+	var timepickerClose = document.createElement('span');
+	timepickerClose.className = 'timepickerClose';
+	timepickerClose.onclick = function(){closeTimePicker();};
+	timepickerTitle.appendChild(timepickerClose);	
+	
+	var timepickerControlsUL = document.createElement('ul');
+	timepickerControlsUL.className = 'timepickerControls';
+	timePicker.appendChild(timepickerControlsUL);	
+	
+	timepickerControlsUL.innerHTML = '<li class="timepickerControlsControl"><span class="timepickerControlsControlUp" onclick=timeVary(".timepickerControlsControlHours","inc")></span><span data-hour="01" class="timepickerControlsControlHours" title="click to edit" contenteditable=true onkeypress="timeKeyPress(event,this)" onkeyup="timeKeyUp(event,this)" >01</span><span class="timepickerControlsControlDown" onclick=timeVary(".timepickerControlsControlHours","dec")></span></li><li class="timepickerControlsControlSeparator"><span class="timepickerControlsControlSeparator-inner">:</span></li><li class="timepickerControlsControl"><span class="timepickerControlsControlUp" onclick=timeVary(".timepickerControlsControlMinutes","inc")></span><span data-minute="16" class="timepickerControlsControlMinutes" title="click to edit" contenteditable=true onkeypress="timeKeyPress(event,this)" onkeyup="timeKeyUp(event,this)" >16</span><span class="timepickerControlsControlDown" onclick=timeVary(".timepickerControlsControlMinutes","dec")></span></li><li class="timepickerControlsControl"><span class="timepickerControlsControlUp" onclick=timeVary(".timepickerControlsControlMeridiem")></span><span class="timepickerControlsControlMeridiem" data-meridiem="PM">PM</span><span class="timepickerControlsControlDown" onclick=timeVary(".timepickerControlsControlMeridiem")></span></li>';
+	
+	function closeTimePicker()
+	{
+		if($("timePicker"))
+		{
+			document.body.removeChild($("timePicker"));
+			document.body.removeChild($("timePickerDullscreen"));
+		}
+	};
+	
+	var hrsDiv = $("timePicker").querySelector('.timepickerControlsControlHours');
+	var minuteDiv = $("timePicker").querySelector('.timepickerControlsControlMinutes');
+	var meridiemDiv = $("timePicker").querySelector('.timepickerControlsControlMeridiem');
+	
+	var d = new Date();
+	var currentHr;
+	var currentMin = (d.getMinutes()<10)?('0'+d.getMinutes()):(d.getMinutes());
+	var meridiem;
+	
+	if(d.getHours()>=1 && d.getHours()<=12)
+		{currentHr = (d.getHours()<10)?('0'+d.getHours()):(d.getHours());meridiem = 'AM';}
+	else {currentHr = ((d.getHours()-12)<10)?('0'+(d.getHours()-12)):(d.getHours()-12);meridiem = 'PM';}
+	
+	hrsDiv.innerHTML = currentHr;
+	minuteDiv.innerHTML = currentMin;
+	meridiemDiv.innerHTML = meridiem;
+	hrsDiv.setAttribute('data-hour',hrsDiv.innerHTML);
+	minuteDiv.setAttribute('data-minute',minuteDiv.innerHTML);
+	meridiemDiv.setAttribute('data-meridiem',meridiem);
+}
+function setTime(hr,min,meridm)
+{
+	var hrsDiv = $("timePicker").querySelector('.timepickerControlsControlHours');
+	var minuteDiv = $("timePicker").querySelector('.timepickerControlsControlMinutes');
+	var meridiemDiv = $("timePicker").querySelector('.timepickerControlsControlMeridiem');
+	var hour = hr || (hrsDiv.innerHTML);
+	var minute = min || (minuteDiv.innerHTML);
+	var meridiem = meridm || (meridiemDiv.innerHTML);
+	
+	if(Number(hour)<10)
+		hrsDiv.innerHTML = '0'+Number(hour);
+	if(Number(minute)<10)
+		minuteDiv.innerHTML = '0'+Number(minute);
+	$($("timePicker").getAttribute('data-timePicker-parentNode')).value = hrsDiv.innerHTML+' : '+minuteDiv.innerHTML+' '+meridiem;
+	
+	hrsDiv.setAttribute('data-hour',hrsDiv.innerHTML);
+	minuteDiv.setAttribute('data-minute',minuteDiv.innerHTML);
+	meridiemDiv.setAttribute('data-meridiem',meridiem);
+}
+function timeKeyUp(e,elem)
+{
+	var hrsDiv = $("timePicker").querySelector('.timepickerControlsControlHours');
+	var minuteDiv = $("timePicker").querySelector('.timepickerControlsControlMinutes');
+	var meridiemDiv = $("timePicker").querySelector('.timepickerControlsControlMeridiem');
+	var elemVal = elem.innerHTML;
+	var prev_hour = hrsDiv.getAttribute('data-hour');
+	var prev_minute = minuteDiv.getAttribute('data-minute');
+	var prev_meridiem = meridiemDiv.getAttribute('data-meridiem');
+	
+	var key = e.which || e.keyCode;
+	if (key == 13)
+	{
+		if((elem==hrsDiv && Number(elemVal)>=1 && Number(elemVal)<=12 && Number(elemVal)) || (elem==minuteDiv && Number(elemVal)<60 && Number(elemVal)>=0 && Number(elemVal)))
+			setTime();
+		else
+		{
+			cancelEvent(e);
+			hrsDiv.innerHTML = prev_hour;
+			minuteDiv.innerHTML = prev_minute;
+			meridiemDiv.innerHTML = prev_meridiem;
+			$($("timePicker").getAttribute('data-timePicker-parentNode')).value = prev_hour+' : '+prev_minute+' '+prev_meridiem;
+		}
+		elem.blur();
+	}
+	else if(key<47 && key>58) cancelEvent(e);
+	function cancelEvent(e)
+	{
+		e.stopPropagation();
+		e.cancelBubble = true;
+		e.preventDefault();
+	}
+}
+function timeKeyPress(e,elem)
+{
+	var elemVal = elem.innerHTML;
+	var hrsDiv = $("timePicker").querySelector('.timepickerControlsControlHours');
+	var minuteDiv = $("timePicker").querySelector('.timepickerControlsControlMinutes');
+	var key = e.which || e.keyCode;
+	if(key>47 && key<58)
+	{
+		if(elem==hrsDiv && (Number(elemVal)>12 || Number(elemVal)<0)) cancelEvent(e);
+		else if(elem==minuteDiv && (Number(elemVal)>59 || Number(elemVal)<0)) cancelEvent(e);
+	}
+	else cancelEvent(e);
+	function cancelEvent(e)
+	{
+		e.stopPropagation();
+		e.cancelBubble = true;
+		e.preventDefault();
+	}
+}
+function otlVLGetPos(elem)
+{
+	var x = elem.offsetLeft;
+	var y = elem.offsetTop;
+	var xo = elem.offsetWidth;
+	var yo = elem.offsetHeight;
+	elem = elem.offsetParent;
+	while(elem)
+	{
+		x += elem.offsetLeft;
+		y += elem.offsetTop;
+		elem = elem.offsetParent;
+	}
+	return [x, y, x+xo, y+yo];
+}
+</script>
+</html>
