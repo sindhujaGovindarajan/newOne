@@ -1,0 +1,95 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="menuSubmenu.css"></link>
+	<script type='text/javascript' src="common.js"></script>
+</head>
+<body>
+<div class="container">
+          <div class="accordion">
+            <dl>
+              <dt id='firstdt'>
+                <a href="#accordion1" aria-expanded="false" aria-controls="accordion1" class="accordion-title accordionTitle js-accordionTrigger">Policy 1</a>
+              </dt>
+              <dd id='firstdd' class="accordion-content accordionItem is-collapsed" id="accordion1" aria-hidden="true">
+                <p>Class 1</p>
+                <p>Class 2</p>
+              </dd>
+              <dt  id='seconddt'>
+                <a href="#accordion2" aria-expanded="false" aria-controls="accordion2" class="accordion-title accordionTitle js-accordionTrigger">Policy 2</a>
+              </dt>
+              <dd id='seconddd' class="accordion-content accordionItem is-collapsed" id="accordion2" aria-hidden="true">
+                <p>Class 1</p>
+                <p>Class 2</p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+</body>
+<script>
+(function(){
+	var d = document,
+	accordionToggles = d.querySelectorAll('.js-accordionTrigger'),
+	setAria,
+	setAccordionAria,
+	switchAccordion,
+  
+  skipClickDelay = function(e){
+    e.preventDefault();
+    e.target.click();
+  }
+
+		setAriaAttr = function(el, ariaType, newProperty){
+		el.setAttribute(ariaType, newProperty);
+	};
+	setAccordionAria = function(el1, el2, expanded){
+		switch(expanded) {
+      case "true":
+      	setAriaAttr(el1, 'aria-expanded', 'true');
+      	setAriaAttr(el2, 'aria-hidden', 'false');
+      	break;
+      case "false":
+      	setAriaAttr(el1, 'aria-expanded', 'false');
+      	setAriaAttr(el2, 'aria-hidden', 'true');
+      	break;
+      default:
+				break;
+		}
+	};
+//function
+switchAccordion = function(e) {
+	e.preventDefault();
+	/*var otherDTs, othrDDs;
+	for(var i=0;i<document.getElementsByTagName('dt').length;i++)
+	{
+		otherDDs = document.getElementsByTagName('dt')[i].nextElementSibling;
+		otherDTs = document.getElementsByTagName('dt')[i];
+		
+		removeClass(otherDTs,'is-collapsed');
+		removeClass(otherDTs,'is-collapsed');
+		removeClass(otherDTs,'is-expanded');
+		removeClass(otherDDs,'is-expanded');
+		removeClass(otherDDs,'animateIn');
+		
+		setAccordionAria(otherDTs, otherDDs, 'false');
+	}*/
+		
+	var thisAnswer = e.target.parentNode.nextElementSibling;
+	var thisQuestion = e.target;
+	if(thisAnswer.classList.contains('is-collapsed')) {
+		setAccordionAria(thisQuestion, thisAnswer, 'true');
+	} else {
+		setAccordionAria(thisQuestion, thisAnswer, 'false');
+	}
+  	thisQuestion.classList.toggle('is-collapsed');
+  	thisQuestion.classList.toggle('is-expanded');
+		thisAnswer.classList.toggle('is-collapsed');
+		thisAnswer.classList.toggle('is-expanded');
+ 	
+  	thisAnswer.classList.toggle('animateIn');
+	};
+	for (var i=0,len=accordionToggles.length; i<len; i++) {
+    accordionToggles[i].addEventListener('click', switchAccordion, false);
+  }
+})();
+</script>
+</html>

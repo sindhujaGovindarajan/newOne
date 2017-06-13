@@ -1,0 +1,156 @@
+<html>
+
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<link rel="stylesheet" href="styleSheet.css" type="text/css">
+	<link rel="stylesheet" href="animate.css" type="text/css">
+	<script type='text/javascript' src="common.js"></script>
+</head>
+<style>
+@-webkit-keyframes fadeOutUp {
+  from {
+    opacity: 1;
+  }
+
+  to {
+	opacity:0;
+    -webkit-transform: translate3d(0, -10%, 0);
+    transform: translate3d(0, -10%, 0);
+  }
+}
+
+@keyframes fadeOutUp {
+  from {
+    opacity: 1;
+  }
+
+  to {
+	opacity:0;
+    -webkit-transform: translate3d(0, -10%, 0);
+    transform: translate3d(0, -10%, 0);
+  }
+}
+
+@-webkit-keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -10%, 0);
+    transform: translate3d(0, -10%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -10%, 0);
+    transform: translate3d(0, -10%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.animated {
+  -webkit-animation-duration: 0.2s;
+  animation-duration: 0.2s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.select-style {
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    width: 120px;
+	height:35px;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: #fff;
+	top:30%;
+	cursor:pointer;
+	left:40%;
+    background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 90% 50%;
+}
+
+.select-style ul
+{
+	padding:3%;
+}
+.select-style li
+{
+	padding:4%;
+}
+#dummySelect li:hover
+{
+	background:#eee;
+	cursor:pointer;
+}
+#dummySelect li[data-selected='true']
+{
+	background:#ddd;
+}
+</style>
+<body onload='assignOptClick()'>
+	<div class="select-style" onclick='customizeSelect()'>
+		<ul>
+			<li id='optShown' data-value='volvo'>Volvo</li>
+		</ul>
+	</div>
+	<div id='dummySelect' class="select-style animated fadeOutUp" style='background:none;height:auto;margin:5px 0 0 0;display:none'>
+	  <ul value='volvo' selectedindex='0'>
+		<li data-opt="volvo" data-selected='true'>Volvo</li>
+		<li data-opt="saab">Saab</li>
+		<li data-opt="mercedes">Mercedes</li>
+		<li data-opt="audi">Audi</li>
+	  </ul>
+	</div>
+</body>
+<script>
+function assignOptClick()
+{
+	for(var i=0;i<$('dummySelect').querySelectorAll('li').length;i++)
+	{
+		$('dummySelect').querySelectorAll('li')[i].onclick = (function()
+		{
+			return function()
+			{
+				$('optShown').setAttribute('data-value',this.getAttribute('data-opt'));
+				$('optShown').innerHTML = this.innerHTML;
+				for(var j=0;j<$('dummySelect').querySelectorAll('li').length;j++)
+					$('dummySelect').querySelectorAll('li')[j].setAttribute('data-selected','false');
+				this.setAttribute('data-selected','true');
+				//this.parentNode.value = 
+				addClass($('dummySelect'),'fadeOutUp');
+				removeClass($('dummySelect'),'fadeInDown');
+				setTimeout(function(){$('dummySelect').style.display = 'none';},200);
+			};
+		})();
+	}
+}
+	function customizeSelect()
+	{	
+		if(hasClass($('dummySelect'),'fadeOutUp'))
+		{
+			$('dummySelect').style.display = 'block';
+			addClass($('dummySelect'),'fadeInDown');
+			removeClass($('dummySelect'),'fadeOutUp');
+		}
+		else if(hasClass($('dummySelect'),'fadeInDown'))
+		{
+			addClass($('dummySelect'),'fadeOutUp');
+			removeClass($('dummySelect'),'fadeInDown');
+			setTimeout(function(){$('dummySelect').style.display = 'none';},200);
+		}
+	}
+</script>
+</html>

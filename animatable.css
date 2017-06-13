@@ -1,0 +1,125 @@
+div {
+	background-color:#6495ED;
+	width:200px;
+	height:200px;
+	border:solid 5px #357EC7;
+}
+.toAnimate {
+	-webkit-animation-duration: 2s;
+	animation-duration: 2s;
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+.peanutToPeanut{
+	-webkit-animation-name: peanutToPeanut;
+	animation-name: peanutToPeanut;
+}
+@-webkit-keyframes peanutToPeanut {
+  from {
+	border-radius: 0% 100% 0% 100%;
+  }
+  50% {
+	border-radius: 100% 0% 100% 0%;
+  }
+  to {
+	border-radius:0% 100% 0% 100%;
+  }
+}
+.sqToCrcle {
+	-webkit-animation-name: sqToCrcle;
+	animation-name: sqToCrcle;
+}
+@-webkit-keyframes sqToCrcle {
+  from {
+	border-radius: 0%;
+  }
+  50% {
+	border-radius:50%;
+  }
+  to {
+	border-radius:0%;
+  }
+}
+.transformInOut {
+	-webkit-animation-name: transformInOut;
+	animation-name: transformInOut;
+}
+@-webkit-keyframes transformInOut {
+  from {
+	transform: rotate(0deg) scale(1);
+  }
+  50% {
+	transform: rotate(360deg) scale(0);
+  }
+  to {
+	transform: rotate(0deg) scale(1);
+  }
+}
+.transform{
+	-webkit-animation-name: transform;
+	animation-name: transform;
+}
+@-webkit-keyframes transform {
+  from {
+	transform: perspective(400px) translate3d(0,0,0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  50% {
+	transform: perspective(400px) translate3d(0,0,-5000px) rotateX(720deg) rotateY(360deg) rotateZ(-360deg);
+  }
+  to {
+	transform: perspective(400px) translate3d(0,0,0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+}
+.backgroundColor{
+	-webkit-animation-name: backgroundColor;
+	animation-name: backgroundColor;
+}
+@-webkit-keyframes backgroundColor {
+  from {
+	border:none;
+	background-color: slategray;
+  }
+  50% {
+	border:none;
+	background-color: black;
+  }
+  to {
+	border:none;
+	background-color: slategray;
+  }
+}
+.boxShadow{
+	-webkit-animation-name: boxShadow;
+	animation-name: boxShadow;
+}
+@-webkit-keyframes boxShadow {
+  from {
+	border:none;
+	box-shadow: none;
+  }
+  50% {
+	border:none;
+	box-shadow: inset -75px -75px 400px #000;
+  }
+  to {
+	border:none;
+	box-shadow: none;
+  }
+}
+.outlineColor{
+	-webkit-animation-name: outlineColor;
+	animation-name: outlineColor;
+}
+@-webkit-keyframes outlineColor {
+  from {
+	border:solid 28px transparent;
+  }
+  50% {
+	border:solid 28px #357EC7;
+  }
+  to {
+	border:solid 28px transparent;
+  }
+}

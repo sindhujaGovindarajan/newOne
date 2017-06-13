@@ -1,0 +1,87 @@
+<html>
+<body onload='showPopup("successfully added")'>
+</body>
+<head>
+<style>
+.confirmationpopup, #popupbg_App
+{
+	position:absolute;
+	width:100%;
+	height:100%;
+	top:0px;
+	left:0px;
+	background:#000000;
+	-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=50)';
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+	z-index:100;
+	display:none;
+}
+.confirmationDiv
+{
+	position:absolute;
+	width:40%;
+	left:30%;
+	height:25%;
+	top:40%;
+	z-index:101;
+	background:#014753;
+	border-radius:10px;
+	box-shadow:10px 10px 15px #333;
+	-webkit-box-shadow:10px 10px 15px #333;
+	-moz-box-shadow:10px 10px 15px #333;
+}
+.popbtns
+{
+	position:absolute;
+    text-align:center;
+    color:white;
+    width : 100px;
+    height : 40px;
+    font:bold 1.25em Calibri;
+    cursor:pointer;
+    /*background:-webkit-linear-gradient(#014753,#01181D,#014753);
+    background: -moz-linear-gradient(top,#01181D,#014753);
+    background-image: -ms-linear-gradient(#01181D, #014753);*/
+	background: -webkit-linear-gradient(left bottom,#01181D,#133137,#01181D); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom left,#01181D,#133137,#01181D); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom left,#01181D,#133137,#01181D); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom left,#01181D,#133137,#01181D); /* Standard syntax (must be last) */
+	border : 0px solid black;
+    border-radius:20px;
+    padding-bottom:1px;
+	line-height:40px;
+}
+</style>
+<script>
+function $(id)
+{return document.getElementById(id);}
+function showPopup(text)
+{   
+	var backgroundDiv = document.body.appendChild(document.createElement('div'));
+	var confirmationDiv = document.body.appendChild(document.createElement('div'));
+	backgroundDiv.className = 'confirmationpopup';
+	backgroundDiv.style.display = 'block';
+	confirmationDiv.className = 'confirmationDiv';
+	confirmationDiv.style.height = 'auto';
+	var textElem = confirmationDiv.appendChild(document.createElement('div'));
+	textElem.style.cssText = "position:relative;font:1.125em calibri;width:95%;margin:0 auto;text-align:center; color:#FFFFFF;padding-top:20px;padding-bottom:10px";
+	textElem.innerHTML = text;
+	var elem = confirmationDiv.appendChild(document.createElement('div'));
+	elem.className = 'popbtns';
+	elem.style.cssText='position:relative;left:40%;margin-bottom:8px;';
+	elem.innerHTML = 'OK';
+	elem.onclick = function(){closeAll([elem,backgroundDiv,confirmationDiv]);};
+}
+
+function closeAll(arr)
+{
+	for(var i=0;i<arr.length;i++)
+	{arr[i].style.display='none';
+	}
+}
+</script>
+</head>
+</html>

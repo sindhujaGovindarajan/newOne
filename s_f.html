@@ -1,0 +1,155 @@
+<html>
+<head>
+	
+<script type="text/javascript">
+
+var canvas ;
+var context ;
+var Val_max= 350;
+var Val_min = -(Val_max/8.75);
+var yScale;
+var columnSize = 0;
+var rowSize = 250;
+var margin = (Val_max/70);
+var rects = [];
+function init()	
+{
+	canvas = document.getElementById("canvas");
+	context = canvas.getContext("2d");
+	var offsetX=canvas.offsetLeft;
+	var offsetY=canvas.offsetTop;
+	yScale = (canvas.height - columnSize - margin) / (Val_max - Val_min);
+	
+	var data = ["         Success,200","         Failure,120"];
+	 // Draw the bar chart
+  drawBarChart(context, data, 250, 100, (canvas.height -20), 50, offsetX, offsetY);
+}
+function drawBarChart(context, data, startX, barWidth, chartHeight, markDataIncrementsIn, offsetX, offsetY) {
+  // Draw the x and y axes
+  var count =  0;
+  var maxValue = 0;
+  
+  context.strokeStyle="#3D3C3A";
+  context.beginPath();
+  context.stroke();
+    // Extract the data
+  for (var i=0; i < data.length; i++) {
+    var values = data[i].split(",");
+    var name = values[0];
+    var height = parseInt(values[1]);
+    if (parseInt(height) > parseInt(maxValue)) maxValue = height+2;	//for y-axis values
+	var success = [150,50],failure= [20,45];
+	if(i==0)
+	{
+		for(var s=0;s<success.length;s++)
+		{
+			// draw bars on the chart for success
+			if(s==0) drawRectangle(context,startX + (i * barWidth) +i,(chartHeight - success[s]),barWidth,success[s],i,s, offsetX, offsetY);
+			else drawRectangle(context,startX + (i * barWidth) +i,((chartHeight - success[s-1])-success[s]-1),barWidth,success[s],i,s, offsetX, offsetY);
+		}
+	}
+	else
+	{
+		for(var f=0;f<failure.length;f++)
+		{
+			// draw bars on the chart for failure
+			if(f==0) drawRectangle(context,startX + (i * barWidth) +i+2,(chartHeight - failure[f]),barWidth,failure[f],i,f, offsetX, offsetY);
+			else drawRectangle(context,startX + (i * barWidth) +i+2,((chartHeight - failure[f-1])-failure[f]-1),barWidth,failure[f],i,f, offsetX, offsetY);
+		}
+	}
+    // Add the column title to the x-axis
+    context.textAlign = "left";
+	context.font = "11px Arial";
+    context.fillStyle = "#3D3C3A";
+    context.fillText(name, startX + (i * barWidth) + i, chartHeight + 10, 200);		
+  }
+  // Add some data markers to the y-axis
+  var numMarkers = Math.ceil(maxValue / markDataIncrementsIn);
+  context.textAlign = "right";
+  context.fillStyle = "#3D3C3A";
+  var markerValue = 0;
+  for (var i=0; i < numMarkers; i++) {		
+    context.fillText(markerValue, (startX - 5), (chartHeight - markerValue), 50);
+    markerValue += markDataIncrementsIn;
+  }
+}
+// drawRectangle - draws a rectangle on a canvas context using the dimensions specified
+function drawRectangle(contextO, x, y, w, h,i,s, offsetX, offsetY) {
+
+	var rect = (function () {
+	function rect(id,x,y,width,height,fill) {//wherein all prop of rect are set
+		this.x=x;
+		this.y=y;
+		this.id=id;
+		this.width=width;
+		this.height=height;
+		this.fill=fill;
+		this.redraw(this.x, this.y);
+		return (this);
+	};
+	rect.prototype.redraw = function (x, y) {
+		this.x = x || this.x;
+		this.y = y || this.y;
+		this.draw(this.fill);
+		return (this);
+	};
+	rect.prototype.highlight = function (x, y) {//to highlight the rect when arrow inside
+		if(this.id == "RectangleS1")
+			this.draw("#F75D59");
+		else if(this.id == "RectangleS2")
+			this.draw("#FF8040");
+		else if(this.id == "RectangleF1")
+			this.draw("#F75D59");
+		else if(this.id == "RectangleF2")
+			this.draw("#FF8040");
+		return (this);
+	};
+	rect.prototype.draw = function (fill) {//to draw the rect
+		context.beginPath();
+		context.rect(this.x, this.y, this.width, this.height);
+		context.strokeStyle=(this.id=='RectangleS1')?'green':((this.id=='RectangleS2')?'green':'red');
+		context.fillStyle = fill;
+		context.lineWidth =1;
+		context.fill();
+		context.stroke();
+	};
+	rect.prototype.isPointInside = function(x,y){//to find if the arrow is inside a particular rect
+		return( x>=this.x 
+				&& x<=this.x+this.width
+				&& y>=this.y
+				&& y<=this.y+this.height);
+	};
+		return rect;
+	})();
+	var color=["#E55451","#F88017"],strk='';
+	if(i==0)
+	{
+		strk='green';
+		rects.push(new rect("RectangleS"+(s+1),x,y,w,h,color[s]));
+		rects[s].draw(color[s],'','',strk);
+	}
+	else if(i==1)
+	{
+		strk='red';
+		rects.push(new rect("RectangleF"+(s+1),x,y,w,h,color[s]));
+		rects[s].draw(color[s],'','',strk);
+	}
+	canvas.onmousemove=function handleMouseMove(e) {
+		mouseX = parseInt(e.clientX - offsetX);
+		mouseY = parseInt(e.clientY - offsetY);
+		
+		for (var i = 0; i < rects.length; i++) {
+			if (rects[i].isPointInside(mouseX, mouseY))
+				rects[i].highlight(mouseX, mouseY);
+			else
+				rects[i].redraw();
+		}
+	};
+}
+</script>
+</head>
+
+<body onLoad="init()">
+<canvas id="canvas" height="400" width="1050" style="margin-top:100px;margin-left:150px;"></canvas>
+</body>
+</html>

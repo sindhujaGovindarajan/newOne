@@ -1,0 +1,153 @@
+<html>
+<head>
+	
+<script type="text/javascript">
+
+var canvas ;
+var context ;
+var Val_max= 350;
+var Val_min = -40;
+var yScale;
+var columnSize = 0;
+var rowSize = 250;
+var margin = 5;
+var rects = [];
+function init()			
+{
+	canvas = document.getElementById("canvas");
+	context = canvas.getContext("2d");
+	var offsetX=canvas.offsetLeft;
+	var offsetY=canvas.offsetTop;
+		
+	yScale = (canvas.height - columnSize - margin) / (Val_max - Val_min);
+	var data = ["         APPLES,200","         ORANGES,120","         BANANAS,80","         KIWIS,230","         GRAPES,340"];
+	 // Draw the bar chart
+  drawBarChart(context, data, 250, 100, (canvas.height -20), 50, offsetX, offsetY);
+}
+function drawBarChart(context, data, startX, barWidth, chartHeight, markDataIncrementsIn, offsetX, offsetY) {
+  // Draw the x and y axes
+  var startY = 380;
+  context.strokeStyle="#3D3C3A";
+  context.beginPath();
+  var count =  0;
+	for (scale=Val_max;scale>=Val_min;scale = scale - markDataIncrementsIn) {
+		var y = columnSize + (yScale * count * markDataIncrementsIn); 
+		context.moveTo(rowSize,y+25);
+		context.lineTo(canvas.width-250,y+25);
+		count++;
+	}
+	context.stroke();
+  var maxValue = 0;
+  for (var i=0; i < data.length; i++) {
+    // Extract the data
+    var values = data[i].split(",");
+    var name = values[0];
+    var height = parseInt(values[1]);
+    if (parseInt(height) > parseInt(maxValue)) maxValue = height+20;	//for y-axis values
+	
+    // Write the data to the chart
+    drawRectangle(context,startX + (i * barWidth) + i,(chartHeight - height),barWidth,height,i, offsetX, offsetY);
+	
+    // Add the column title to the x-axis
+    context.textAlign = "left";
+	context.font = "11px Arial";
+    context.fillStyle = "#3D3C3A";
+    context.fillText(name, startX + (i * barWidth) + i, chartHeight + 10, 200);		
+  }
+  // Add some data markers to the y-axis
+  var numMarkers = Math.ceil(maxValue / markDataIncrementsIn);
+  context.textAlign = "right";
+  context.fillStyle = "#3D3C3A";
+  var markerValue = 0;
+  for (var i=0; i < numMarkers; i++) {		
+    context.fillText(markerValue, (startX - 5), (chartHeight - markerValue), 50);
+    markerValue += markDataIncrementsIn;
+  }
+}
+// drawRectangle - draws a rectangle on a canvas context using the dimensions specified
+function drawRectangle(contextO, x, y, w, h,i, offsetX, offsetY) {
+
+	var rect = (function () {
+	function rect(id,x,y,width,height,fill) {
+		this.x=x;
+		this.y=y;
+		this.id=id;
+		this.width=width;
+		this.height=height;
+		this.fill=fill;
+		this.redraw(this.x, this.y);
+		return (this);
+	};
+	rect.prototype.redraw = function (x, y) {
+		this.x = x || this.x;
+		this.y = y || this.y;
+		this.draw(this.fill);
+		return (this);
+	};
+	rect.prototype.highlight = function (x, y) {
+		if(this.id == "Rectangle1")
+			this.draw("#F75D59",0,y);
+		else if(this.id == "Rectangle2")
+			this.draw("#FF8040",0,y);
+		else if(this.id == "Rectangle3")
+			this.draw("#EAC117",0,y);
+		else if(this.id == "Rectangle4")
+			this.draw("#9DC209",0,y);
+		else if(this.id == "Rectangle5")
+			this.draw("#7E354D",0,y);
+		return (this);
+	};
+	rect.prototype.draw = function (fill,p,mouseY) {
+		context.beginPath();
+		context.rect(this.x, this.y, this.width, this.height);
+		context.fillStyle = fill;
+		context.fill();
+		/*if(p==0)
+		{
+			var rectWidth = 100;
+			var rectHeight = 25;
+			var cornerRadius = 4;
+			//context.fillText("Hello World",this.x+(rectWidth),this.y+(rectHeight/2));
+			context.lineJoin = "round";
+			context.lineWidth = cornerRadius;
+			context.strokeStyle=fill;
+			context.strokeRect(this.x+(cornerRadius/2)+this.width+10, mouseY+(cornerRadius/2), rectWidth-cornerRadius, rectHeight-cornerRadius);
+			context.stroke();
+		}*/
+	};
+	rect.prototype.isPointInside = function(x,y){
+		return( x>=this.x 
+				&& x<=this.x+this.width
+				&& y>=this.y
+				&& y<=this.y+this.height);
+	};
+		return rect;
+	})();
+	var color = ["#E55451","#F88017","#806517","#6AA121","#810541"];
+	drawRect(i,x,y,w,h,rect,color[i]);
+	
+	canvas.onmousemove=function handleMouseMove(e) {
+		mouseX = parseInt(e.clientX - offsetX);
+		mouseY = parseInt(e.clientY - offsetY);
+		// Put your mousemove stuff here
+		//context.clearRect(0,0,this.width,this.height);
+		for (var i = 0; i < rects.length; i++) {
+			if (rects[i].isPointInside(mouseX, mouseY))
+				rects[i].highlight(mouseX, mouseY);
+			else
+				rects[i].redraw();
+		}
+	};
+}
+function drawRect(i,x,y,w,h,rect,color)
+{
+	rects.push(new rect("Rectangle"+(i+1),x,y,w,h,color));
+	rects[i].draw(color);
+}
+</script>
+</head>
+
+<body onLoad="init()">
+<canvas id="canvas" height="400" width="1050" style="margin-top:100px;margin-left:150px;"></canvas>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="sticky.css" rel="stylesheet" type="text/css">
+		<title>CSS3 Bar Graph Demo</title>
+		<link rel="stylesheet" type="text/css" href="cylindricalgraph.css">
+	</head>
+	<body style="">
+    <div id="css-script-menu">
+</div>
+    <h1 style="margin-top:150px; text-align:center;">CSS3 Bar Graph Demo</h1>
+		<!-- css bar graph -->
+		<div class="css_bar_graph">
+			
+			<!-- y_axis labels -->
+			<ul class="y_axis">
+				<li>100%</li><li>80%</li><li>60%</li><li>40%</li><li>20%</li><li>0%</li>
+			</ul>
+			
+			<!-- x_axis labels -->
+			<ul class="x_axis">
+				<li>Steel</li><li>Copper</li><li>Metal</li><li>Iron</li><li>Wood</li>
+			</ul>
+			
+			<!-- graph -->
+			<div class="graph">
+				<!-- grid -->
+				<ul class="grid">
+					<li><!-- 100 --></li>
+					<li><!-- 80 --></li>
+					<li><!-- 60 --></li>
+					<li><!-- 40 --></li>
+					<li><!-- 20 --></li>
+					<li class="bottom"><!-- 0 --></li>
+				</ul>
+				
+				<!-- bars -->
+				<!-- 250px = 100% -->
+				<ul>
+					<li class="bar nr_1 blue" style="height: 125px;"><div class="top"></div><div class="bottom"></div><span>50%</span></li>
+					<li class="bar nr_2 blue" style="height: 225px;"><div class="top"></div><div class="bottom"></div><span>90%</span></li>
+					<li class="bar nr_3 blue" style="height: 75px;"><div class="top"></div><div class="bottom"></div><span>30%</span></li>
+					<li class="bar nr_4 blue" style="height: 100px;"><div class="top"></div><div class="bottom"></div><span>40%</span></li>
+					<li class="bar nr_5 blue" style="height: 150px;"><div class="top"></div><div class="bottom"></div><span>60%</span></li>
+				</ul>	
+			</div>
+			
+			<!-- graph label -->
+			<div class="label"><span>Graph: </span>Gain (in percent)</div>
+		
+		</div>
+	
+<div id="window-resizer-tooltip"><a href="#" title="Edit settings"></a><span class="tooltipTitle">Window size: </span><span class="tooltipWidth" id="winWidth"></span> x <span class="tooltipHeight" id="winHeight"></span><br><span class="tooltipTitle">Viewport size: </span><span class="tooltipWidth" id="vpWidth"></span> x <span class="tooltipHeight" id="vpHeight"></span></div></body></html>

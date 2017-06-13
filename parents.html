@@ -1,0 +1,21 @@
+<html>
+<body onload='parents(document.getElementById("span"))'>
+<div>
+<span>
+<div id='span'>
+</div>
+</span>
+</div>
+</body>
+<script>
+function parents(node) {
+   let current = node,
+       list    = [];
+   while(current.parentNode != null && current.parentNode != document.documentElement) {
+     list.push(current.parentNode);
+     current = current.parentNode;
+   }
+    alert(list);
+}
+</script>
+</html>

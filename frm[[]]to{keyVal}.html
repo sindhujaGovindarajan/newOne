@@ -1,0 +1,17 @@
+<html>
+<body onload='re()'>
+<script>
+//fn to change from [[keys],[Values]] rsp to {key:Value}
+function re()
+{
+	var response_ori ={"Records":[["AdminId","AdminName","EMailId","MobileNo","Rights","Status","MakerFlag","UpdateTime","AdminType"],["1","ESignRootAdmin","rootadmin@certrix.com","","255","1","0","1453898117","3"]]};
+	var response_alt = {};var i=0,j=0;
+	for(var i=0;i<response_ori.Records.length;i++)
+	{
+		for(var j=0;j<response_ori.Records[i].length;j++)
+			response_alt[response_ori.Records[0][j]] =response_ori.Records[1][j];
+	}
+}
+</script>
+</body>
+</html>

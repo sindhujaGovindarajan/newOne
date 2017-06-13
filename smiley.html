@@ -1,0 +1,92 @@
+<html>
+<style>
+#curvedLeftEye {
+	margin-top: -160px;
+	margin-left: 460px;
+	width: 18px;
+	height: 12px;
+	border-radius: 50%;
+	box-shadow: 0px 5px 0 0 black;
+	-ms-transform: rotate(180deg);
+	-webkit-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+#curvedLeftEye:after {
+  content: "";
+  position: absolute;
+  border: 1px solid transparent;
+  border-top: 4px solid black;
+  border-radius: 31px 0 0 0;
+  top: -5.5px;
+  left: 5px;
+  width: 30px;
+  height: 30px;
+  -webkit-transform: rotate(230deg);
+  -moz-transform: rotate(230deg);
+  -ms-transform: rotate(230deg);
+  -o-transform: rotate(45deg);
+}
+#curvedRightEye {
+	margin-top: -11px;
+	margin-left: 540px;
+	width: 18px;
+	height: 12px;
+	border-radius: 50%;
+	box-shadow: 0px 5px 0 0 black;
+	-ms-transform: rotateY(0deg) rotateX(180deg);
+	-webkit-transform: rotateY(0deg) rotateX(180deg);
+	transform: rotateY(0deg) rotateX(180deg);
+}
+#curvedRightEye:after {
+  content: "";
+  position: absolute;
+  border: 1px solid transparent;
+  border-top: 4px solid black;
+  border-radius: 31px 0 0 0;
+  top: -5.5px;
+  left: 5px;
+  width: 30px;
+  height: 30px;
+  -webkit-transform: rotate(230deg);
+  -moz-transform: rotate(230deg);
+  -ms-transform: rotate(230deg);
+  -o-transform: rotate(45deg);
+}
+#face
+{
+	width:200px;
+	height:200px;
+	margin-left:400px;
+	margin-top:100px;
+	background-color:yellow;
+	border:solid 7px black;
+	border-radius:50%;
+}
+#mouth
+{ 
+	display:block;
+	width: 106px;
+	height: 135px;
+	margin-left:455px;
+	margin-top:1px;
+	background-color: black;
+	-webkit-border-radius: 63px 63px 63px 63px / 108px 108px 72px 72px;
+	border-radius: 50%  50%  50%  50%  / 60%   60%   40%  40%;
+}
+#tongue
+{
+	width: 50px;
+	height: 53px;
+	margin-left:465px;
+	margin-top:-60px;
+	background-color: red;
+	border-radius: 50%;
+}
+</style>
+<body>
+	<div id='face'></div>
+	<div id='curvedLeftEye'></div><div id='curvedRightEye'></div>
+	<div id='mouth'></div>
+	<div id='tongue'></div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<html>
+<style>
+.custSelDiv
+{
+	height:100px;
+	width:100px;
+	border:solid 1px red;
+	position:relative;
+	top:200px;
+}
+.custSelDiv:after
+{
+	content:attr(data-hover-content);
+	opacity:0;
+	position:absolute;
+	top:0;left:0;
+}
+.custSelDiv:hover:after
+{
+	opacity:1;
+}
+</style>
+<body>
+	<div class='custSelDiv' data-hover-content="Choose a unique name to identify this CA." >
+	<div class='custSelDiv other' data-hover-content="Choose a unique name to identify this CA. Other" >
+	
+</body>
+</html>

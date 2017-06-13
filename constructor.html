@@ -1,0 +1,27 @@
+<html>
+<head>
+<script>
+var school = function School()
+{
+	this.students = 99;
+	//this.teachers = 33;
+	//this.nonTeachingStaffs = 11;
+};
+var DPI = new school();
+DPI.students = 99;
+school = new school();
+//if(DPI === Object)
+	alert(DPI == school);
+	alert(school);
+alert("DPI.students : "+DPI.students+"\nschool.students : "+school.students);
+/*var o = {};
+o.constructor === Object; // true// '===' will compare the type and value
+
+var a = [];
+a.constructor === Array; // true
+
+var n = new Number(3);
+n.constructor === Number; // true*/
+</script>
+</head>
+</html>

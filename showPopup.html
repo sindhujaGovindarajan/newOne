@@ -1,0 +1,98 @@
+<html>
+<head>
+<style>
+#dullScreen
+{
+	z-index:999;
+	position:absolute;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:100%;
+	background:#000;
+	opacity:0.4;
+}
+#MessageArea
+{
+    font:1.125em Comic Sans MS;
+    color : #000000;
+    position : absolute;
+	top : 35%;
+    left: 25%;
+	height : 15%;
+    width: 50%;
+    line-height: 20px;
+    text-align : center;
+    z-index : 1001;
+	border-radius  : 10px;
+    text-shadow: 0 0 1px #999;
+    box-shadow : 0px 0px 3px #FFFFFF;
+	-webkit-box-shadow:0px 0px 3px #FFFFFF;
+	-moz-box-shadow:0px 0px 3px #FFFFFF;
+	background: -webkit-linear-gradient(left bottom,#605da5 ,#3a386f); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom left,#605da5 ,#3a386f); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom left,#605da5 ,#3a386f); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom left,#605da5 ,#3a386f); /* Standard syntax (must be last) */
+    display : none;
+    letter-spacing:1px;
+    -webkit-animation-name: example; 
+    -webkit-animation-duration: 500ms; 
+    animation-name: example;
+    animation-duration: 500ms;
+}
+@-webkit-keyframes example {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes example {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+#MessageArea >span:nth-child(2)
+{
+	position:absolute;
+	top:2%;
+	right:2%;
+	background:#232052;
+	height:30px;
+	width:30px;
+	border-radius:50%;
+	text-align:center;
+	color:#FFFFFF;
+	cursor:pointer;
+	line-height:30px;
+}
+</style>
+</head>
+<body>
+<script>
+showPopup('hi');
+/*********popup*************/
+function showPopup(msg)
+{
+	var dullScreen = document.createElement('div');   
+	dullScreen.id='dullScreen';
+    dullScreen.style.display='block';
+	document.body.appendChild(dullScreen);
+	var popup = document.createElement('div');
+    popup.id = 'MessageArea';
+    popup.style.display  = "block";
+	popup.innerHTML = "<span class='pop_text' id='adminPopText'></span>";
+	document.body.appendChild(popup);
+	var close = document.createElement("span");
+	close.innerHTML = "X";
+	popup.appendChild(close);
+    $('adminPopText').innerHTML=msg;
+	dullScreen.onclick = function(){
+		document.body.removeChild(popup);
+		document.body.removeChild(this);
+	};
+	close.onclick = function(ev){
+		cancelEvent(ev);
+		dullScreen.click();
+	}
+}
+function $(id){return document.getElementById(id);}
+</script></body>
+</html>

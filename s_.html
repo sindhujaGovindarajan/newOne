@@ -1,0 +1,123 @@
+<html>
+<body onLoad="init()">
+<canvas id="canvas" height="250" width="160" style="margin-top:100px;margin-left:150px;border:solid 1px black"></canvas>	
+<script type="text/javascript">
+/*{"Records":{["ASPId","ASPName","BioSuccessCount","BioFailureCount","OTPSuccessCount","OTPFailureCount"],[….]}}*/
+function $(id)
+{
+	return document.getElementById(id);
+}
+
+var context =$('canvas').getContext("2d");
+var rects = [];
+function init()	
+{
+	var offsetX=$('canvas').offsetLeft;
+	var offsetY=$("canvas").offsetTop;
+	var data = ["OTP,500","Biometric,120"];
+	 // Draw the bar chart
+  if($('canvas').height<200) drawBarChart(context, data, 50, 50, ($('canvas').height -20), 10, offsetX, offsetY);
+  else drawBarChart(context, data, 50, 50, ($('canvas').height -50), 50, offsetX, offsetY);
+}
+function drawBarChart(context, data, startX, barWidth, chartHeight, markDataIncrementsIn, offsetX, offsetY) {
+  // Draw the x and y axes
+  var count =  0;
+  var maxValue = 0;
+  
+  context.strokeStyle="#3D3C3A";
+  context.beginPath();
+  context.stroke();
+    // Extract the data
+  for (var i=0; i < data.length; i++) {
+    var values = data[i].split(",");
+    var name = values[0];
+    var height = parseInt(values[1]);
+    if (parseInt(height) > parseInt(maxValue)) maxValue = height;	//for y-axis values
+	
+	drawRectangle(context,startX + (i * barWidth) + i,(chartHeight - height),barWidth,height,i, offsetX, offsetY);
+	
+    // Add the column title to the x-axis
+    context.textAlign = "left";
+	context.font = "11px Arial";
+    context.fillStyle = "#3D3C3A";
+    context.fillText(name, startX + (i * barWidth) + i, chartHeight + 10, 200);		
+  }
+  // Add some data markers to the y-axis
+  var numMarkers = Math.ceil(maxValue / markDataIncrementsIn);
+  //alert(numMarkers);
+  context.textAlign = "right";
+  context.fillStyle = "#3D3C3A";
+  var markerValue = 0;
+  for (var i=0; i < numMarkers; i++) {		
+    context.fillText(markerValue, (startX - 5), (chartHeight - markerValue), 50);
+	alert(markDataIncrementsIn+" "+(chartHeight - markerValue));
+    markerValue += markDataIncrementsIn;
+  }
+}
+// drawRectangle - draws a rectangle on a canvas context using the dimensions specified
+function drawRectangle(contextO, x, y, w, h,i, offsetX, offsetY) {
+
+	var rect = (function () {
+	function rect(id,x,y,width,height,fill) {//wherein all prop of rect are set
+		this.x=x;
+		this.y=y;
+		this.id=id;
+		this.width=width;
+		this.height=height;
+		this.fill=fill;
+		this.redraw(this.x, this.y);
+		return (this);
+	};
+	rect.prototype.redraw = function (x, y) {
+		this.x = x || this.x;
+		this.y = y || this.y;
+		this.draw(this.fill);
+		return (this);
+	};
+	rect.prototype.highlight = function (x, y) {//to highlight the rect when arrow inside
+		if(this.id == "OTP")
+			this.draw("#F75D59");
+		else if(this.id == "Biometric")
+			this.draw("#FF8040");
+		return (this);
+	};
+	rect.prototype.draw = function (fill) {//to draw the rect
+		context.beginPath();
+		context.rect(this.x, this.y, this.width, this.height);
+		context.fillStyle = fill;
+		context.lineWidth =1;
+		context.fill();
+	};
+	rect.prototype.isPointInside = function(x,y){//to find if the arrow is inside a particular rect
+		return( x>=this.x 
+				&& x<=this.x+this.width
+				&& y>=this.y
+				&& y<=this.y+this.height);
+	};
+		return rect;
+	})();
+	if(i==0)
+	{
+		rects.push(new rect("OTP",x,y,w,h,'#F75D59'));
+		rects[i].draw('#F75D59');
+	}
+	else
+	{
+		rects.push(new rect("Biometric",x,y,w,h,'#FF8040'));
+		rects[i].draw('#FF8040');
+	}
+	canvas.onmousemove=function handleMouseMove(e) {
+		mouseX = parseInt(e.clientX - offsetX);
+		mouseY = parseInt(e.clientY - offsetY);
+		
+		for (var i = 0; i < rects.length; i++) {
+			if (rects[i].isPointInside(mouseX, mouseY))
+				rects[i].highlight(mouseX, mouseY);
+			else
+				rects[i].redraw();
+		}
+	};
+}
+</script>
+</body>
+</html>

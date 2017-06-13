@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Drawing</title>
+		<style>
+		select
+		{border-radius:15px;height:30px;}
+		#selClr
+		{color:white;background:black;}
+		</style>
+	</head>
+	<body>
+		<canvas id="Canvas" width="1300" height="450" style='border: 5px solid #333;'></canvas>
+		<input type='button' id='clear' value='Clear'></input>
+		<select id='selClr'>Choose Color
+			<option style='background:black'>Black</option>
+			<option style='background:violet'>Violet</option>
+			<option style='background:#728C00'>Venom Green</option>
+			<option style='background:#F75D59'>Valentine Red</option>
+			<option style='background:grey'>Grey</option>
+		</select>
+		<select id='selSize'>Choose Size
+			<option value='2'>Small</option>
+			<option value='5'>Normal</option>
+			<option value='8'>Large</option>
+			<option value='20'>Huge</option>
+		</select>
+		<!--select id='selTool'>Choose Tool
+			<option value='crayon'>Crayon</option>
+			<option value='marker'>Marker</option>
+			<option value='eraser'>Eraser</option>
+		</select-->
+	</body>
+	<script>
+	function $(id)
+	{
+		return document.getElementById(id);
+	}
+	var context = $('Canvas').getContext("2d");
+	var clickX = [],clickY = [],clickDrag = [],clr = [],size = [];
+	var paint,tool = 'crayon';
+	
+	$('selClr').onchange= function()
+	{
+		clr.push($('selClr').options[$('selClr').selectedIndex].style.backgroundColor);
+		$('selClr').style.backgroundColor = $('selClr').options[$('selClr').selectedIndex].style.backgroundColor;
+	};
+	$('selSize').onchange= function()
+	{
+		size.push($('selSize').options[$('selSize').selectedIndex].value);
+	};
+	/*$('selTool').onchange= function()
+	{
+		tool = $('selTool').options[$('selTool').selectedIndex].value;
+	};*/
+	$('Canvas').onmousedown = function(e){
+		paint = true;
+		addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+		redraw();
+	};
+	$('Canvas').onmousemove=function(e){
+		if(paint){
+			addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+			redraw();
+		}
+	};
+	$('Canvas').onmouseup=function(e){
+		paint = false;
+	};
+	$('Canvas').onmouseleave=function(e){
+		paint = false;
+	};
+	
+	function addClick(x, y, dragging)
+	{
+		clickX.push(x);
+		clickY.push(y);
+		clickDrag.push(dragging);
+		size.push($('selSize').options[$('selSize').selectedIndex].value);
+		/*if(tool == "eraser")
+			clr.push("white");
+		else*/
+			clr.push($('selClr').options[$('selClr').selectedIndex].style.backgroundColor);
+	}
+	$('clear').addEventListener('click', function() {
+        context.clearRect(0, 0, $('Canvas').width, $('Canvas').height);
+		clickX = [];
+		clickY = [];
+		clickDrag = [];
+		size=[];clr=[];
+    }, false);
+	  
+	function redraw(){
+		context.lineJoin = "round";
+		for(var i=0; i < clickX.length; i++) {
+			context.beginPath();
+			if(clickDrag[i] && i){
+				context.moveTo(clickX[i-1], clickY[i-1]);
+			}
+			else{
+				context.moveTo(clickX[i]-1, clickY[i]);
+			}
+			context.lineTo(clickX[i], clickY[i]);
+			context.strokeStyle = clr[i];
+			context.lineWidth = (size)?size[i]:2;
+			context.closePath();
+			context.stroke();
+		}
+		/*if(tool == "crayon") {
+			context.globalAlpha = 0.2;
+			//context.drawImage(crayonTextureImage, 0, 0, $('Canvas').width, $('Canvas').height);
+		}
+		else
+		context.globalAlpha = 1;*/
+	}
+	</script>
+</html>

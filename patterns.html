@@ -1,0 +1,56 @@
+<html>
+<script>
+	function pwdPolicy(pwd)
+	{
+		var box = [document.getElementById('numeric'),document.getElementById('alphanumeric'),document.getElementById('alphabets')];
+		var pattern = ['/^[0-9]*$/gm','/^(?=.*[a-zA-Z\d].*)[a-zA-Z\d]{7,}$/gm','/^[a-zA-Z]*$/gm'];
+		if((pwd.id==box[0].id)&&(!(pwd.value).match(pattern[0])))
+		{
+			alert('wrong'+ pwd.value+ (pwd.id==box[0].id)+ (!(pwd.value).match(pattern[0])));
+			return false;
+		}
+		else if((pwd.id==box[1].id)&&(!(pwd.value).match(pattern[1])))
+		{
+			alert('wrong'+pwd.value);
+			return false;
+		}
+		else if((pwd.id==box[2].id)&&(!(pwd.value).match(pattern[2])))
+		{
+			alert('wrong'+pwd.value);
+			return false;
+		}
+		else return true;
+	}//oninput='pwdPolicy(this)'
+	function gotcha(elem)
+	{
+		var val = elem.value;
+		var pat = elem.pattern;
+		if(!val.match(pat)) return true;
+		else 
+		{
+			alert("wrong");
+			return false;
+		}
+	}
+</script>
+<body>
+<form>
+	<div>
+		<span>numbers only</span>
+		<input type='password' id='numeric' name='numeric' pattern='/^[0-9]*$/gm' onblur='gotcha(this)'/>
+	</div>
+	<br>
+	<br>
+	<div>
+		<span>alphanumeric</span>
+		<input type='password' id='alphanumeric' name='alphanumeric' oninput='pwdPolicy(this)'/>
+	</div>
+	<br>
+	<br>
+	<div>
+		<span>alphabets</span>
+		<input type='password' id='alphabets' name='alphabets' oninput='pwdPolicy(this)'/>
+	</div>
+</form>
+</body>
+</html>

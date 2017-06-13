@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.pagination {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 15px;
+  margin: auto;
+  text-align: center;
+}
+.paginationDot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border: 2px solid #5ae4dd;
+  border-radius: 100px;
+  display: inline-block;
+  cursor: pointer;
+  margin: 0 4px;
+  -webkit-transition: .3s;
+  transition: .3s;
+}
+.paginationDotActive {
+  background: #5ae4dd;
+}
+.paginationDot:hover {
+  -webkit-transition: .3s;
+  transition: .3s;
+  border-color: #1BA39C;
+  //background: white;
+}
+.paginationDot:hover:before {
+  //top: -48px;
+  opacity: 1;
+}
+.paginationDot:hover:after {
+ // top: -18px;
+  opacity: 1;
+}
+.paginationDot:before {
+  position: absolute;
+ // top: -40px;
+  //left: -36px;
+  background: white;
+  width: 80px;
+  font-family: "Montserrat";
+  font-size: 14px;
+  padding: 8px 0;
+  border-radius: 3px;
+  opacity: 0;
+  -webkit-transition: .3s;
+  transition: .3s;
+}
+</style>
+<script type='text/javascript' src="common.js"></script>
+</head>
+<body>
+<div class="pagination">
+  <div class="paginationDot paginationDotActive" onclick='changeDot(this)'></div>
+  <div class="paginationDot" onclick='changeDot(this)'></div>
+  <div class="paginationDot" onclick='changeDot(this)'></div>
+  <div class="paginationDot" onclick='changeDot(this)'></div>
+  <div class="paginationDot" onclick='changeDot(this)'></div>
+</div>
+</body>
+<script>
+function changeDot(elem)
+{
+	for(var i=0;i<elem.parentNode.children.length;i++)
+	{
+		removeClass(elem.parentNode.children[i],'paginationDotActive');
+	}
+	addClass(elem,'paginationDotActive');
+}
+</script>
+</html>
+

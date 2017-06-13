@@ -1,0 +1,282 @@
+<div class="center-wrap">
+  <div class="title-container">
+    <div class="ribbon-left"></div>
+    <div class="backflag-left"></div>
+    <div class="title"><a href="/">Responsive Animated Ribbon Title</a></div>
+    <div class="backflag-right"></div>
+    <div class="ribbon-right"></div>
+  </div>
+</div>
+<style>
+.center-wrap
+{
+	width:100%;
+	margin: auto;
+    clear: both;
+    text-align: center;
+}
+.title a:hover {
+    color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+    -o-transition: .3s;
+    -ms-transition: .3s;
+    -moz-transition: .3s;
+    -webkit-transition: .3s;
+    transition: .3s;
+}
+.title
+{
+	min-width: 150px;
+    max-width: 750px;
+    overflow: hidden;
+    white-space: nowrap;
+    float: left;
+    margin-left: -75px;
+    margin-right: -75px;
+    -webkit-animation: title-width .8s ease;
+    -moz-animation: title-width .8s ease;
+    -o-animation: title-width .8s ease;
+    animation: title-width .8s ease;
+}
+.title-container
+{
+	font-size: 4.8vw;
+	background-color: #2f2f42;
+    display: inline-block;
+    font-family: "Calibri";
+    text-shadow: 0px 1px rgba(0,0,0,0.3);
+    font-size: 42px;
+    height: 60px;
+    line-height: 60px;
+	border-radius:6px;
+    margin-top: 100px;
+}
+.ribbon-left, .ribbon-right
+{
+	background: #29293a;
+    margin-top: 31px;
+    position: absolute;
+    height: 60px;
+    width: 120px;
+    z-index: -300;
+}
+.ribbon-left
+{
+	float: left;
+    margin-left: -32px;
+    text-align: center;
+    -webkit-animation: flag-end-left 1s ease;
+    -moz-animation: flag-end-left 1s ease;
+    -o-animation: flag-end-left 1s ease;
+    animation: flag-end-left 1s ease;
+}
+.ribbon-left:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-bottom: 30px solid #29293a;
+    border-left: 50px solid transparent;
+    float: left;
+    margin-left: -50px;
+    margin-top: 30px;
+}
+.ribbon-left:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 30px solid #29293a;
+    border-left: 50px solid transparent;
+    float: left;
+    margin-left: -50px;
+    margin-top: 0;
+}
+.ribbon-right:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-bottom: 30px solid #29293a;
+    border-right: 50px solid transparent;
+    float: right;
+    margin-right: -50px;
+    margin-top: 30px;
+}
+.ribbon-right:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 30px solid #29293a;
+    border-right: 50px solid transparent;
+    float: right;
+    margin-right: -50px;
+    margin-top: 0;
+}
+.title a
+{
+	color: white;
+    -o-transition: .3s;
+    -ms-transition: .3s;
+    -moz-transition: .3s;
+    -webkit-transition: .3s;
+    transition: .3s;
+    text-decoration: none;
+}
+.backflag-left {
+    -webkit-transform: rotate(20deg) skew(20deg);
+    -ms-transform: rotate(20deg) skew(20deg);
+    transform: rotate(20deg) skew(20deg);
+    float: left;
+}
+.backflag-left, .backflag-right {
+    background: #232332;
+    width: 91px;
+    height: 56px;
+    position: relative;
+    margin-top: 18px;
+    z-index: -100;
+    -webkit-animation: flag-back 1s ease;
+    -moz-animation: flag-back 1s ease;
+    -o-animation: flag-back 1s ease;
+    animation: flag-back 1s ease;
+}
+.backflag-right
+{
+	-webkit-transform: rotate(-20deg) skew(-20deg);
+    -ms-transform: rotate(-20deg) skew(-20deg);
+    transform: rotate(-20deg) skew(-20deg);
+    float: right;
+}
+.ribbon-right
+{
+	display: inline;
+    margin-left: 3px;
+    -webkit-animation: flag-end-right 1s ease;
+    -moz-animation: flag-end-right 1s ease;
+    -o-animation: flag-end-right 1s ease;
+    animation: flag-end-right 1s ease;
+}
+#ribbon {
+    font-family: "Calibri";
+	width: 180px;
+	height: 280px;
+	margin: 50px auto 0;
+	position: relative;
+	overflow: hidden;
+	transform:rotate(90deg) scale(0.6);
+}
+
+#ribbon .inset {
+	width: 110%;
+	height: 19%;
+	position: absolute;
+	top: -50px;
+	left: -10px;
+	z-index: 5;
+	
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	
+	background: rgba(0,0,0,0.3);
+	
+	box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.3);
+	-moz-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.3);
+}
+
+#ribbon .container {
+	position: relative;
+	width: 55.1%;
+	height: 89.5%;
+	overflow: hidden;
+	margin: 0 auto;
+	border-left: 1px solid #631a15;
+	border-right: 1px solid #631a15;
+}
+
+#ribbon .base >span
+{
+	display:inline-block;
+	width:100%;
+	white-space:nowrap;
+	position:relative;
+	top:55%;
+	transform:rotate(-90deg);
+	color:#f2f2f2;
+	font-size:26px;
+}
+
+#ribbon .base {
+	height: 80%;
+	width: 100%;
+	background: rgb(199,59,60);
+	background: -moz-linear-gradient(top,  rgba(199,59,60,1) 0%, rgba(184,32,31,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(199,59,60,1)), color-stop(100%,rgba(184,32,31,1)));
+	background: -webkit-linear-gradient(top,  rgba(199,59,60,1) 0%,rgba(184,32,31,1) 100%);
+	background: -o-linear-gradient(top,  rgba(199,59,60,1) 0%,rgba(184,32,31,1) 100%);
+	background: -ms-linear-gradient(top,  rgba(199,59,60,1) 0%,rgba(184,32,31,1) 100%);
+	background: linear-gradient(top,  rgba(199,59,60,1) 0%,rgba(184,32,31,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c73b3c', endColorstr='#b8201f',GradientType=0 );
+	position: relative;
+	z-index: 2;
+}
+#ribbon .base:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	width: 86%;
+	height: 121%;
+	left: 6px;
+	border-left: 1px dashed #631a15;
+	border-right: 1px dashed #631a15;
+}
+#ribbon .base:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	width: 86%;
+	height: 121%;
+	left: 7px;
+	border-left: 1px dashed #da5050;
+	border-right: 1px dashed #da5050;
+}
+#ribbon .left_corner {
+	width: 101%;
+	height: 40%;
+	background: #b8201f;
+	position: absolute;
+	bottom: 20px;
+	left: -50px;
+	z-index: 1;
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+#ribbon .right_corner {
+	width: 103%;
+	height: 40%;
+	background: #b8201f;
+	position: absolute;
+	bottom: 20px;
+	right: -50px;
+	z-index: 1;
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+</style>
+<div id="ribbon">
+	
+	<div class="inset"></div>
+	
+	<div class="container">
+		<div class="base"><span>MY CHORES</span></div>
+		<div class="left_corner"></div>
+		<div class="right_corner"></div>
+	</div>
+
+</div>

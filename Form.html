@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Form Elements</title>
+	<script type="text/javascript" src="Form.js"></script>
+	<style>
+	#container
+	{
+	position:absolute;
+	top:20px;
+	left:100px;
+	}
+	.main
+	{
+	padding:10px;
+	}
+	.label
+	{
+	display:inline-block;
+	width:200px;
+	}
+	</style>
+</head>
+<body>
+<form id="frm" onsubmit="return formSubmission(this)">
+<div id="container">
+	<div class="main">
+		<span class="label">NAME:</span>
+		<span><input type="text" name="name"></span>
+	</div>
+	<div class="main">
+		<span class="label">AGE:</span>
+		<span><input type="number" name="age" min="18" max="62"></span>
+	</div>
+	<div class="main">
+		<span class="label">GENDER:</span>
+		<span>
+			<input type="radio" name="gender" value="male">
+			<span id="male" class="gender">MALE</span>
+		</span>
+		<span>
+			<input type="radio" name="gender" value="female">
+			<span id="female" class="gender">FEMALE</span>
+		</span>
+	</div>
+	<div class="main">
+		<span class="label">UPLOAD_PHOTO:</span>
+		<span><input type="file" name="photo" onchange="return listFiles(this.files)"></span>
+	</div>
+	<div class="main">
+		<span class="label">AGREE Or Not? :</span>
+		<span><input type="checkbox" name="YES" id="phone">Yes</span>
+		<span><input type="checkbox" name="NO" id="phone">No</span>
+		<span><input type="checkbox" name="ALL" id="phone">All</span>
+	</div>
+	<div class="main">
+		<span class="label">EMAIL_ID:</span>
+		<span><input type="email" name="emailid" id="email"></span>
+	</div>
+	<div class="main">
+		<span class="label">DESIGNATION:</span>
+		<span>
+			<select style="width:172px;" name="designation">
+				<option>-----SELECT-----</option>
+				<option>trainee</option>
+				<option>leader</option>
+				<option>manager</option>
+			</select>
+		</span>
+	</div>
+	<div class="main">
+		<span class="label">ADDRESS:</span>
+		<span><textarea name="address" id="address"></textarea>
+		</span>
+	</div>
+	<div class="main">
+		<span><input type="submit" value="SUBMIT" name="submit"></span>
+	</div>
+</div>
+</form>
+</body>
+</html>

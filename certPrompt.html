@@ -1,0 +1,108 @@
+<html>
+<head>
+<style>
+body{
+	padding:40px;
+	font-family:'calibri';
+    font-style:condensed;
+  background: #5b2072; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #5b2072 0%, #5d1566 50%, #251a41 100%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#5b2072), color-stop(50%,#5d1566), color-stop(100%,#251a41)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover,  #5b2072 0%,#5d1566 50%,#251a41 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover,  #5b2072 0%,#5d1566 50%,#251a41 100%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover,  #5b2072 0%,#5d1566 50%,#251a41 100%); /* IE10+ */
+    background: radial-gradient(ellipse at center,  #5b2072 0%,#5d1566 50%,#251a41 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5b2072', endColorstr='#251a41',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+.promos {
+  width: 700px;
+  margin: 0 auto;
+  margin-top: 50px;
+  text-align:center;
+}
+.promo {
+	width: 100%;
+	background: #0F1012; 
+	color: #f9f9f9;
+	display:inline-block;
+  box-shadow: 0 0 4px 1px rgba(20, 20, 20, 0.8);
+	cursor:pointer;
+}
+.deal {
+  padding: 10px 0 0 0;
+}
+.deal span {
+  display: block;
+  text-align: center;
+}
+.deal span:first-of-type {
+    font-weight: 800;
+	font-size: 29px;
+  text-transform: uppercase;
+}
+.promo .options {
+  display: block;
+  width: 100%;  
+  background: #292b2e;
+  margin: 0px 0 2px 0;
+  text-align: center;
+  font-size: 23px;
+  padding: 17px 0 17px 0;
+	-webkit-transition: transform 0.1s ease, box-shadow 0.3s ease;
+	-moz-transition: transform 0.1s ease, box-shadow 0.3s ease;
+	-o-transition: transform 0.1s ease, box-shadow 0.3s ease;
+	-ms-transition: transform 0.1s ease, box-shadow 0.3s ease;
+	transition: transform 0.1s ease, box-shadow 0.3s ease;
+}
+.options:hover
+{
+	transform: scale(1.02);
+  box-shadow: 0 0 4px 1px rgba(20, 20, 20, 0.8);
+}
+ul {
+  display: block;
+  margin: 20px 0 10px 0;
+  padding: 0;
+  list-style-type: none;
+  text-align: center;
+  color: #999999;
+}
+li {
+  display: block;
+  margin: 10px 0 0 0;
+}
+button {
+  border: none;
+    font-weight: 800;
+	font-size: 19px;
+  border-radius: 40px;
+  background: #eac80d;
+  color: #f9f9f9;
+  padding: 10px 37px;
+  margin: 0px 0 20px 0px;
+}
+</style>
+</head>
+<body>
+<div class="promos">  
+<div class="promo">
+  <div class="deal">
+    <span>Mapped admins</span>
+    <span>Choose your admin</span>
+  </div>
+  <ul>
+    <li class='options'>
+		<span style='display:inline-block;width:30%'>STEVE JOBS</span><span style='display:inline-block;width:30%'>Admin</span><span style='display:inline-block;width:30%'>First VERA</span>
+	</li>
+    <li class='options'>
+		<span style='display:inline-block;width:30%'>WALT DISNEY</span><span style='display:inline-block;width:30%'>Admin</span><span style='display:inline-block;width:30%'>First VERA</span>
+	</li>
+    <li class='options'>
+		<span style='display:inline-block;width:30%'>VICTOR HUGO</span><span style='display:inline-block;width:30%'>Admin</span><span style='display:inline-block;width:30%'>First VERA</span>
+	</li>
+  </ul>
+  <button>Login</button>
+</div>
+</div>
+</body>
+</html>

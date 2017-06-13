@@ -1,0 +1,43 @@
+<html>
+<style>
+.close-button {
+  height: 50px;
+  width: 50px;
+  position: relative;
+  box-sizing: border-box;
+  line-height: 50px;
+  display: inline-block;
+}
+.close-button:before, .close-button:after {
+  transform: rotate(-45deg);
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -5px;
+  margin-left: -25px;
+  display: block;
+  height: 10px;
+  width: 50px;
+  background-color: #fff;
+  transition: all 0.25s ease-out;
+}
+.close-button:after {
+  transform: rotate(-135deg);
+}
+.close-button:hover:before, .close-button:hover:after {
+  transform: rotate(0deg);
+}
+
+body {
+  color: #fff;
+  font-family: arial, sans-sarif;
+  background-color: #333;
+  text-align: center;
+}
+</style>
+<body>
+<h2>My close button 2</h2>
+<a href="#" class="close-button"></a>
+</body>
+</html>

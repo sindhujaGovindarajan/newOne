@@ -1,0 +1,122 @@
+<html>
+<head>
+<style>
+body {padding:10px}
+
+#draggable-element {
+ 
+  background: lightgreen; height: 200px; width: 200px;
+}
+#draggable-element.resizable { position: relative; }
+.resizer { background: grey; position:absolute; }
+</style>
+</head>
+<body>
+<div id="draggable-element"></div>
+<div style='background: lightgreen; height: 200px; width: 200px;position: relative;'>
+</div>
+</body>
+<script>
+function $(id){return document.getElementById(id);}
+/*-------------------------------------resizing-----------------------------------*/
+	resizing($('draggable-element'));
+	drgNdrop($('draggable-element'));
+	
+function resizing(container)
+{
+	for(var i=0;i<8;i++)
+		container.innerHTML +='<div class="resizer"></div>';
+	
+	var resizers = container.children;			//getting all the resizers in an array
+	var elemSelected, startX, startY, startWidth, startHeight;
+	
+	container.className = container.className + ' resizable';
+	
+	//styling resizers accordingly
+	resizers[0].style.cssText = ' bottom:-1;cursor:s-resize;height: 5px; width:'+container.offsetWidth;
+	resizers[1].style.cssText = ' top: -1;cursor:n-resize; height: 5px; width:'+container.offsetWidth;
+	resizers[2].style.cssText = ' right: -1;cursor:e-resize; width: 5px;height:'+container.offsetHeight;
+	resizers[3].style.cssText = ' left: -1;cursor:w-resize; width: 5px;height:'+container.offsetHeight;
+	resizers[4].style.cssText = ' bottom:-1;cursor:sw-resize;left: -1; width: 5px;height:5px';
+	resizers[5].style.cssText = ' bottom:-1;cursor:se-resize;right: -1; width: 5px;height:5px';
+	resizers[6].style.cssText = ' top:-1;cursor:nw-resize;left: -1; width: 5px;height:5px';
+	resizers[7].style.cssText = ' top:-1;cursor:ne-resize;right: -1; width: 5px;height:5px';
+	
+	//assigning mousedown fn. to all resizers
+	for(var len=0;len<resizers.length;len++)
+		resizers[len].addEventListener('mousedown', initDrag, false);
+	
+	function initDrag(e) {
+		e.stopPropagation();
+		elemSelected = e.srcElement;
+		startX = e.clientX;
+		startY = e.clientY;
+		startWidth = parseInt(document.defaultView.getComputedStyle(container).width, 10);
+		startHeight = parseInt(document.defaultView.getComputedStyle(container).height, 10);
+		document.documentElement.addEventListener('mousemove', doDrag, false);
+		document.documentElement.addEventListener('mouseup', stopDrag, false);
+	};
+
+	function doDrag(e)
+	{
+		if(elemSelected==resizers[0] || elemSelected==resizers[1])
+			container.style.height = (startHeight + e.clientY - startY) + 'px';
+		else if(elemSelected==resizers[2] || elemSelected==resizers[3])
+			container.style.width = (startWidth + e.clientX - startX) + 'px';
+		else if(elemSelected==resizers[4] || elemSelected==resizers[5] || elemSelected==resizers[6] || elemSelected==resizers[7])
+		{
+			container.style.height = (startHeight + e.clientY - startY) + 'px';
+			container.style.width = (startWidth + e.clientX - startX) + 'px';
+		}
+		resizers[0].style.width = resizers[1].style.width = container.offsetWidth;
+		resizers[2].style.height = resizers[3].style.height = container.offsetHeight;
+	};
+
+	function stopDrag(e) {
+		document.documentElement.removeEventListener('mousemove', doDrag, false);
+		document.documentElement.removeEventListener('mouseup', stopDrag, false);
+	};
+}
+/*---------------------------------------------------------------------------------*/
+
+/*--------------------------------drag and drop------------------------------------*/
+function drgNdrop(element)
+{
+var selected = null, // Object of the element to be moved
+    x_pos = 0, y_pos = 0, // Stores x & y coordinates of the mouse pointer
+    x_elem = 0, y_elem = 0; // Stores top, left values (edge) of the element
+
+// Will be called when user starts dragging an element
+function _drag_init(elem) {
+    // Store the object of the element which needs to be moved
+    selected = elem;
+    x_elem = x_pos - selected.offsetLeft;
+    y_elem = y_pos - selected.offsetTop;
+}
+
+// Will be called when user dragging an element
+function _move_elem(e) {
+    x_pos = document.all ? window.event.clientX : e.pageX;
+    y_pos = document.all ? window.event.clientY : e.pageY;
+    if (selected !== null) {
+        selected.style.left = (x_pos - x_elem) + 'px';
+        selected.style.top = (y_pos - y_elem) + 'px';
+    }
+}
+
+// Destroy the object when we are done
+function _destroy() {
+    selected = null;
+}
+
+// Bind the functions...
+element.onmousedown = function () {
+    _drag_init(this);
+    return false;
+};
+
+document.onmousemove = _move_elem;
+document.onmouseup = _destroy;
+}
+</script>
+</html>

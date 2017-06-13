@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Drawing</title>
+		<style>canvas { border: 1px solid #ccc }</style>
+	</head>
+	<body>
+	<canvas id="c" width="1300" height="500"></canvas>
+	<input type='button' id='clear' value='Clear'></input>
+	<script>
+	function $(id)
+	{
+		return document.getElementById(id);
+	}
+	function drawCircle(options) {
+		//ctx.save();
+		ctx.beginPath();
+		ctx.globalAlpha = options.opacity;
+		ctx.arc(options.x, options.y, Math.random(),0,getRandomInt(0,2 * Math.PI));
+		ctx.fillStyle = 'rgb('+getRandomInt(0,255)+','+getRandomInt(0,255)+','+getRandomInt(0,255)+')';
+		ctx.rotate(Math.PI / 180 * options.angle);
+		ctx.scale(options.scale, options.scale);
+		//ctx.strokeStyle = options.color;
+		for (var i = 5; i--;) {
+			ctx.arc(options.x, options.y, Math.random(),0,getRandomInt(0,2 * Math.PI));//ctx.arc(x,y,r,sAngle,eAngle,counterclockwise);
+			ctx.fillStyle = 'rgb('+getRandomInt(0,255)+','+getRandomInt(0,255)+','+getRandomInt(0,255)+')';
+		}
+		ctx.fill();
+	}
+
+	function getRandomInt(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+
+	var el = $('c');
+	var ctx = el.getContext('2d');
+
+	var isDrawing, points = [ ], radius = 15;
+
+	function addRandomPoint(e) {
+		points.push({ 
+			x: e.clientX, 
+			y: e.clientY, 
+			angle: getRandomInt(0, 180),
+			width: getRandomInt(1,10),
+			opacity: Math.random(),
+			scale: getRandomInt(1, 20) / 10,
+			color: ('rgb('+getRandomInt(0,255)+','+getRandomInt(0,255)+','+getRandomInt(0,255)+')')
+		});
+	}
+
+	el.onmousedown = function(e) {
+		isDrawing = true;
+		addRandomPoint(e);
+	};
+	el.onmousemove = function(e) {
+		if (!isDrawing) return;
+
+		addRandomPoint(e);
+
+		ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+		for (var i = 0; i < points.length; i++) {
+			drawCircle(points[i]);
+		}
+	};
+	el.onmouseup = function() {
+		isDrawing = false;
+	};
+	$('clear').addEventListener('click', function() {
+        ctx.clearRect(0, 0, $('c').width, $('c').height);
+		points = [];
+    }, false);
+</script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  font-family: 'Lato';
+}
+
+.heading-primary {
+  font-size: 2em;
+  padding: 2em;
+  text-align: center;
+}
+
+.accordion ul,
+.accordion-list {
+  border: 1px solid #ddd;
+}
+.accordion ul:after,
+.accordion-list:after {
+  content: "";
+  display: block;
+  height: 1em;
+  width: 100%;
+  background-color: #2ba659;
+}
+
+.accordion li,
+.accordion__panel {
+  background-color: #eee;
+  font-size: 1em;
+  line-height: 1.5em;
+}
+
+.accordion p {
+  padding: 1em 2em 1em 2em;
+}
+
+.accordion {
+  position: relative;
+  background-color: #eee;
+}
+
+.policyListcontainer {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2em 0 2em 0;
+}
+
+.accordionTitle,
+.accordion__Heading {
+  background-color: #38cc70;
+  text-align: center;
+  font-weight: 700;
+  padding: 2em;
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  -webkit-transition: background-color 0.5s ease-in-out;
+  transition: background-color 0.5s ease-in-out;
+  border-bottom: 1px solid #30bb64;
+}
+.accordionTitle:before,
+.accordion__Heading:before {
+  content: "+";
+  font-size: 1.5em;
+  line-height: 0.5em;
+  float: left;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+.accordionTitle:hover,
+.accordion__Heading:hover {
+  background-color: #2ba659;
+}
+
+.accordionTitleActive,
+.accordionTitle.is-expanded {
+  background-color: #2ba659;
+}
+.accordionTitleActive:before,
+.accordionTitle.is-expanded:before {
+  -webkit-transform: rotate(-225deg);
+          transform: rotate(-225deg);
+}
+
+.accordionItem {
+  height: auto;
+  overflow: hidden;
+  max-height: 50em;
+  -webkit-transition: max-height 1s;
+  transition: max-height 1s;
+}
+@media screen and (min-width: 48em) {
+  .accordionItem {
+    max-height: 15em;
+    -webkit-transition: max-height 0.5s;
+    transition: max-height 0.5s;
+  }
+}
+
+.accordionItem.is-collapsed {
+  max-height: 0;
+}
+
+.no-js .accordionItem.is-collapsed {
+  max-height: auto;
+}
+
+.animateIn {
+  -webkit-animation: accordionIn 0.45s normal ease-in-out both 1;
+          animation: accordionIn 0.45s normal ease-in-out both 1;
+}
+
+.animateOut {
+  -webkit-animation: accordionOut 0.45s alternate ease-in-out both 1;
+          animation: accordionOut 0.45s alternate ease-in-out both 1;
+}
+
+@-webkit-keyframes accordionIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.9) rotateX(-60deg);
+            transform: scale(0.9) rotateX(-60deg);
+    -webkit-transform-origin: 50% 0;
+            transform-origin: 50% 0;
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes accordionIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.9) rotateX(-60deg);
+            transform: scale(0.9) rotateX(-60deg);
+    -webkit-transform-origin: 50% 0;
+            transform-origin: 50% 0;
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@-webkit-keyframes accordionOut {
+  0% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(0.9) rotateX(-60deg);
+            transform: scale(0.9) rotateX(-60deg);
+  }
+}
+@keyframes accordionOut {
+  0% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(0.9) rotateX(-60deg);
+            transform: scale(0.9) rotateX(-60deg);
+  }
+}
+</style>
+</head>
+<body>
+<div class="policyListcontainer">
+	<div class="policyListaccordion">
+	<ul class="accordion-title accordionTitle js-accordionTrigger" onclick='list(this)'>p1
+		<li  class="accordion-content accordionItem is-collapsed" ><p>p1c1</p>
+		</li>
+		<li  class="accordion-content accordionItem is-collapsed" ><p>p1c2</p>
+		</li>
+	</ul>
+	<ul class="accordion-title accordionTitle js-accordionTrigger" onclick='list(this)'>p2
+		<li  class="accordion-content accordionItem is-collapsed" ><p>p2c1</p>
+		</li>
+		<li  class="accordion-content accordionItem is-collapsed" ><p>p2c2</p>
+		</li>
+	</ul>
+	</div>
+</div>
+</body>
+<script type='text/javascript' src="common.js"></script>
+<script>
+function $(id)
+{
+	return document.getElementById(id);
+}
+function list(elem)
+{
+	for(var i=0;i<elem.parentNode.children.length;i++)
+	{
+		removeClass(elem.parentNode.children[i],'is-collapsed');
+		removeClass(elem.parentNode.children[i],'is-expanded');
+		for(var j=0;j<elem.parentNode.children[i].children.length;j++)
+		{
+			removeClass(elem.parentNode.children[i].children[j],'is-expanded');
+			removeClass(elem.parentNode.children[i].children[j],'animateIn');
+		}
+	}
+	addClass(elem, 'is-collapsed');
+	addClass(elem, 'is-expanded');
+	for(var child=0;child<elem.children.length;child++)
+	{
+		addClass(elem.children[child], 'is-expanded');
+		addClass(elem.children[child], 'animateIn');
+	}
+}
+
+/*var resp=[{"PolicyClassId":1,"PolicyName":'p1',"ClassName":'p1c1'},{"PolicyClassId":2,"PolicyName":'p1',"ClassName":'p1c2'},{"PolicyClassId":3,"PolicyName":'p2',"ClassName":'p2c1'},{"PolicyClassId":4,"PolicyName":'p2',"ClassName":'p2c2'}];
+for(var list=0;list<resp.length;list++)
+{
+	if(list==0 || (list!=0 && resp[list-1].PolicyName != resp[list].PolicyName)) $('policyList').innerHTML += '<dt><a aria-expanded="false" aria-controls="accordion" class="accordion-title accordionTitle js-accordionTrigger">'+resp[list].PolicyName+'</a></dt><dd class="accordion-content accordionItem is-collapsed" aria-hidden="true">';
+	
+	$('policyList').innerHTML += '<p>'+resp[list].ClassName+'</p></dd>';
+}*/
+</script>
+</html>

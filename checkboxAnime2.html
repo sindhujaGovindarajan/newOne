@@ -1,0 +1,212 @@
+<html><head>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <title>Creating Animated Checkboxes</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+html,
+button,
+input,
+select,
+textarea {
+    color: #222;
+}
+
+html {
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+audio,
+canvas,
+img,
+video {
+    vertical-align: middle;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    resize: vertical;
+}
+
+
+body{
+    font: 16px/1.5 'Lato', Arial, sans-serif;
+    background: #3498db;
+    color: #ffffff;
+}
+
+h1{
+    font-size: 50px;
+    font-weight: 300;
+    text-align: center;
+}
+
+span{
+    color: #2980b9;
+    font-weight: bold;
+}
+
+
+h2{
+  font-size: 35px;
+  text-align: left;
+  margin-left: -20px;
+}
+
+
+nav{
+width: 28.09%;
+margin: 0 auto;
+display: block;
+
+}
+
+nav a {
+  border: 2px solid #ecf0f1;
+  border-radius: 2px;
+  color: #2980b9;
+  display: inline-block;
+  font-family: "Lato",sans-serif;
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+nav a.active,nav a:hover {
+    background: #ecf0f1;
+    color: #3498db;
+
+}
+
+
+
+ul li{
+    list-style: none;
+    margin: 10px auto;
+    font-family: 'Lato';
+
+}
+
+/* Checkbox Icons */
+.animeCheck label {
+    position: relative;
+    padding-left: 30px;
+    font-size: 30px;
+    cursor: pointer;
+    color: #fff;
+    padding: 16px 28px 0 0;
+}
+
+.animeCheck label:before, .animeCheck label:after {
+    font-family: FontAwesome;
+    font-size: 50px;
+    /*absolutely positioned*/
+    position: absolute; top: 0; left: -49px;
+}
+
+.animeCheck label:before {
+    content: '\002610'; /*checkbox unchecked */
+}
+.animeCheck label:after {
+    content: '\002714'; /*checkbox checked*/
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0.5;
+    font-size: 27px;
+   top: 35%;
+   left: -35px;
+   color: #f2ca27;
+
+-webkit-transition: all 0.50s; 
+    -moz-transition: all 0.50s;
+    -o-transition: all 0.50s;
+     transition: all 0.50s;
+}
+
+/* Hide the Ordinary Checkbox */
+.animeCheck input[type='checkbox'] {
+    display: none;
+}
+
+/* Animating the Checkbox Icon */
+.animeCheck input[type='checkbox']:checked + label::after {
+  margin-right: 90px;
+  max-width: 25px;
+  opacity: 1;
+  width: 25px;
+}
+</style>
+
+
+</head>
+<body>
+<h1>Creating <span>Animated</span> Checkboxes</h1>
+<nav>       
+	<a href="checkboxAnime.html">Demo 1</a>
+	<a href="index2.html">Demo 2</a>
+	<a href="checkboxAnime2.html" class="active">Demo 3</a>
+</nav>                
+<div class="wrapper" style="width: 39%; margin: 0 auto; ">
+<h2> What is your profession?</h2>
+<ul class='animeCheck'>
+    <li>
+        <input type="checkbox" checked name="manager" id="manager">
+        <label for="manager">Project Manager</label>
+    </li>
+    <li>
+        <input type="checkbox" name="webdesigner" id="webdesigner">
+        <label for="webdesigner">Web Designer</label>
+    </li>
+    <li>
+        <input type="checkbox" name="webdev" id="webdev">
+        <label for="webdev">Web Developer</label>
+    </li>
+    <li>
+        <input type="checkbox" name="seo" id="seo">
+        <label for="seo">SEO</label>
+    </li>
+    <li>
+        <input type="checkbox" name="itstaff" id="itstaff">
+        <label for="itstaff">IT Staff</label>
+    </li>
+    <li>
+        <input type="checkbox" name="csr" id="csr">
+        <label for="csr">Customer Service Representative</label>
+    </li>
+</ul>
+</div>
+</body>
+</html>
