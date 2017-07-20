@@ -1,0 +1,192 @@
+<template id='newItem_template'>
+  <link rel='stylesheet' href='item_templateStyle.css' />
+  <style>
+    .itemWrapper
+    {
+      top:50px;
+      background:#fafafa;
+    }
+    .itemWrapper:hover
+    {
+      background:#fff;
+    }
+    .item_uploadImgFile
+    {
+      width:90%;
+      height:90%;
+      opacity:0;
+      z-index:1;
+      cursor:pointer;
+      position:absolute;
+    }
+    .item_nameInput
+    {
+      font-size:15px;
+      line-height:40px;
+      height:40px;
+    }
+    .item_titleInput
+    {
+      font-size:12px;
+    }
+    .item_nameInput,.item_titleInput
+    {
+      background:transparent;
+      text-align:center;
+      width:90%;
+      border:0;
+      box-shadow:none;
+      outline:0;
+    }
+    .item_name
+    {
+      color:#262b2f;
+    }
+    .item_title
+    {
+      color:#adadad;
+    }
+    .item_addBtn
+    {
+      background-color:#5DBD80;
+      color:white;
+      padding:3px;
+      font-size:11px;
+      border-radius:3px;
+      position:absolute;
+      cursor:pointer;
+      bottom:0px;
+      right:6px;
+      display:none;
+      -ms-transition:all 0.2s ease;
+      -moz-transition:all 0.2s ease;
+      -o-transition:all 0.2s ease;
+      -webkit-transition:all 0.2s ease;
+      transition:all 0.2s ease;
+    }
+    .item_addBtn:active
+    {
+      background-color:#6dc38c;
+    }
+    .item_addBtn:hover
+    {
+      background-color:#53aa73;
+    }
+  </style>
+  <div class='itemWrapper'>
+    <div class='item_imgWrapper'>
+      <input class='item_uploadImgFile' type="file" />
+      <img class='item_img' />
+    </div>
+    <div class='item_name'>
+      <input class='item_nameInput' type="text" />
+    </div>
+    <div class='item_title'>
+      <input class='item_titleInput' type="text" />
+    </div>
+    <span class='item_addBtn'>ADD</span>
+  </div>
+</template>
+<script>
+  (function()
+   {
+    var newItemObj = {};
+    var ownerDoc = (document._currentScript)?(document._currentScript.ownerDocument):(document.currentScript.ownerDocument);
+    function importTemplate(templateid)
+    {
+      var templateClone = ownerDoc.getElementById(templateid);
+      return document.importNode(templateClone.content,true);
+    }
+    (function(){
+      var item_prototype = Object.create(HTMLElement.prototype);
+      item_prototype.createdCallback = function(){
+        var curObj = this;
+        var root = this.createShadowRoot();
+        root.appendChild(importTemplate('newItem_template'));
+
+        var img = root.querySelector('.itemWrapper > .item_imgWrapper > .item_img');
+        img.setAttribute('src',this.getAttribute('data-img'));
+        img.setAttribute('title',this.getAttribute('data-title'));
+        img.setAttribute('alt',this.getAttribute('data-alt'));
+
+        var item_addBtn = root.querySelector('.itemWrapper > .item_addBtn');
+        var item_titleInput = root.querySelector('.itemWrapper > .item_title > .item_titleInput');
+        var item_uploadImgFile = root.querySelector('.itemWrapper > .item_imgWrapper > .item_uploadImgFile');
+        var item_nameInput = root.querySelector('.itemWrapper > .item_name > .item_nameInput');
+
+        item_uploadImgFile.onchange = function()
+        {
+          if(this.files.length)
+          {
+            var file = this.files[0];
+            var reader = new FileReader();
+            reader.onload = function(evt) 
+            {
+              img.setAttribute('src',evt.target.result);
+              newItemObj['data-img'] = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+            if(this.files[0] && item_nameInput.value && item_titleInput.value)
+              item_addBtn.style.display = 'inline';
+          }
+        };
+
+        item_nameInput.setAttribute('placeholder',this.getAttribute('data-placeholder'));
+        item_nameInput.onkeyup = function(e)
+        {
+          var key = e.which || e.keyCode;
+          if(key == 13) this.blur();
+        };
+        item_nameInput.onblur = function()
+        {
+          nameBlur(this);
+        };
+
+        item_titleInput.setAttribute('placeholder',this.getAttribute('data-category'));
+        item_titleInput.onkeyup = function(e)
+        {
+          var key = e.which || e.keyCode;
+          if(key == 13) this.blur();
+        };
+        item_titleInput.onblur = function()
+        {
+          titleBlur(this);
+        };
+
+        item_addBtn.onclick = function()
+        {
+          resetCard();
+          myItem_Obj.createItem(newItemObj);
+        };
+        function nameBlur(elem)
+        {
+          var val = elem.value;
+          if(val)
+          {
+            newItemObj['data-name'] = val;
+            if(item_uploadImgFile.files[0] && item_titleInput.value)
+              item_addBtn.style.display = 'inline';
+          }
+        }
+        function titleBlur(elem)
+        {
+          var val = elem.value;
+          if(val)
+          {
+            newItemObj['data-category'] = val;
+            newItemObj['data-title'] = 'I am a '+val;
+            if(item_uploadImgFile.files[0] && item_nameInput.value)
+              item_addBtn.style.display = 'inline';
+          }
+        }
+        function resetCard()
+        {
+          item_addBtn.style.display = 'none';
+          item_titleInput.value = item_nameInput.value = item_uploadImgFile.value = '';
+          img.setAttribute('src',curObj.getAttribute('data-img'));
+        }
+      }
+      document.registerElement('my-add-item',{prototype:item_prototype});
+    })();
+  })();
+</script>

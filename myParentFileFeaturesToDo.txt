@@ -1,0 +1,6 @@
+* add new item
+* delete existing item
+* select and delete selected
+* arrange item name-wise in ascending order & vice-versa
+* get all items data and export as .csv			
+  [refer: https://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side]

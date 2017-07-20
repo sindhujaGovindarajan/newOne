@@ -1,0 +1,89 @@
+<template id='item_template'>
+  <link rel='stylesheet' href='item_templateStyle.css' />
+  <style>
+    .itemWrapper
+    {
+      background:#fff;
+    }
+    .itemWrapper:hover
+    {
+      border-bottom:solid 5px #00bae1;
+    }
+    .itemWrapper:hover .item_img
+    {
+      width:92%;
+      height:92%;
+    }
+    .item_img
+    {
+      -ms-transition:all 0.2s ease;
+      -moz-transition:all 0.2s ease;
+      -o-transition:all 0.2s ease;
+      -webkit-transition:all 0.2s ease;
+      transition:all 0.2s ease;
+    }
+    .item_delete
+    {
+      z-index:1;
+      position:absolute;
+      right:6px;
+      top:4px;
+      padding:0 2px;
+      color:#555;
+      font-size:8px;
+      font-weight:bold;
+      -ms-transition:all 0.2s ease;
+      -moz-transition:all 0.2s ease;
+      -o-transition:all 0.2s ease;
+      -webkit-transition:all 0.2s ease;
+      transition:all 0.2s ease;
+    }
+    .item_delete:hover
+    {
+      cursor:pointer;
+      color:#444;
+    }
+  </style>
+  <div class='itemWrapper'>
+    <span class='item_delete'>&#x2573;</span>
+    <div class='item_imgWrapper'><img class='item_img' /></div>
+    <div class='item_name'></div>
+    <div class='item_title'></div>
+  </div>
+</template>
+<script>
+  (function()
+   {
+    var ownerDoc = (document.currentScript)?(document.currentScript.ownerDocument):(document._currentScript.ownerDocument);
+    var templateClone = ownerDoc.getElementById('item_template');
+    var protoItem = {
+      'create':function(curObj){
+        var root = curObj.createShadowRoot();
+        root.appendChild(document.importNode(templateClone.content,true));
+
+        var img = root.querySelector('.itemWrapper > .item_imgWrapper > .item_img');
+        img.setAttribute('src',curObj.getAttribute('data-img'));
+        img.setAttribute('title',curObj.getAttribute('data-title'));
+        img.setAttribute('alt',curObj.getAttribute('data-alt'));
+
+        var item_name = root.querySelector('.itemWrapper > .item_name');
+        item_name.textContent = curObj.getAttribute('data-name');
+
+        var item_title = root.querySelector('.itemWrapper > .item_title');
+        item_title.textContent = curObj.getAttribute('data-category');
+
+        var item_delete = root.querySelector('.itemWrapper > .item_delete');
+        item_delete.onclick = function()
+        {
+          root.innerHTML = '';
+          item_data.deleteItem(curObj);
+        };
+      }
+    };
+    var itemTmpl_prototype = Object.create(HTMLElement.prototype);
+    itemTmpl_prototype.createdCallback = function(){protoItem.create(this);};
+
+    // Register our new element
+    document.registerElement('my-item',{prototype:itemTmpl_prototype});
+  })();
+</script>
