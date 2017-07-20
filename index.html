@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Web worker testing</title>
+    <link rel="stylesheet" href="style.css">
+    <script src='myScript.js'></script>
+    <script src='svgGraph.js'></script>
+    <script src='worker.js'></script>
+  </head>
+  <body onload='init();'>
+    <div class='graphContainer'>
+      <legend>Without Web worker</legend>
+      <div id='container_1' ></div>
+    </div>
+    <div class='graphContainer'>
+      <legend>With Web worker</legend>
+      <div id='container_2' ></div>
+    </div>
+  </body>
+</html>
